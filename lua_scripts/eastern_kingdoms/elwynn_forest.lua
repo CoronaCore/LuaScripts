@@ -87,3 +87,31 @@ end
 
 RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 1, ThurosLightfingersOnEnterCombat)
 RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 2, ThurosLightfingersOnLeaveCombat)
+
+--
+-- Kobold Labourer - Random Say on Aggro
+-- NPC Entry 80
+-- Script Complete 100%
+--
+
+NPC_KOBOLD_LABOURER = 80
+
+local SAY_KOBOLD_LABOURER_1 = "You no take candle!"
+local SAY_KOBOLD_LABOURER_2 = "Yiieeeee! Me run!"
+
+local function KoboldLabourerOnEnterCombat(event, creature, target)
+    local chance = math.random(1, 2)
+
+    if (chance == 1) then
+        creature:SendUnitSay(SAY_KOBOLD_LABOURER_1, 0)
+    elseif (chance == 2) then
+        creature:SendUnitSay(SAY_KOBOLD_LABOURER_2, 0)
+    end
+end
+
+local function KoboldLabourerOnLeaveCombat(event, creature)
+    creature:RemoveEvents()
+end
+
+RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 1, KoboldLabourerOnEnterCombat)
+RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 2, KoboldLabourerOnLeaveCombat)
