@@ -56,3 +56,34 @@ end
 
 RegisterCreatureEvent(NPC_DEFIAS_THUG, 1, DefiasThugOnEnterCombat)
 RegisterCreatureEvent(NPC_DEFIAS_THUG, 2, DefiasThugOnLeaveCombat)
+
+--
+-- Thuros Lightfingers - Random Say on Aggro
+-- NPC Entry 61
+-- Script Complete 100%
+--
+
+NPC_THUROS_LIGHTFINGERS = 61
+
+local SAY_THUROS_LIGHTFINGERS_1 = "The Brotherhood will not tolerate your actions."
+local SAY_THUROS_LIGHTFINGERS_2 = "Ah, a chance to use this freshly sharpened blade."
+local SAY_THUROS_LIGHTFINGERS_3 = "Feel the power of the Brotherhood!"
+
+local function ThurosLightfingersOnEnterCombat(event, creature, target)
+    local chance = math.random(1, 3)
+
+    if (chance == 1) then
+        creature:SendUnitSay(SAY_THUROS_LIGHTFINGERS_1, 0)
+    elseif (chance == 2) then
+        creature:SendUnitSay(SAY_THUROS_LIGHTFINGERS_2, 0)
+    elseif (chance == 3) then
+        creature:SendUnitSay(SAY_THUROS_LIGHTFINGERS_3, 0)
+    end
+end
+
+local function ThurosLightfingersOnLeaveCombat(event, creature)
+    creature:RemoveEvents()
+end
+
+RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 1, ThurosLightfingersOnEnterCombat)
+RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 2, ThurosLightfingersOnLeaveCombat)
