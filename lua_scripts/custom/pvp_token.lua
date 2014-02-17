@@ -27,7 +27,7 @@ local function PvPTokenSystem(event, killer, killed)
             end
         else
             killer:SendBroadcastMessage("|cffff0000 Your bags are full, we will send it by mail.|r")
-            -- SendMail("PvP Token System", "Your Bags are full we send via Mail", receiver, nil, 41, nil, ItemEntry, ItemCount)
+            SendMail("PvP Token System", "Your Bags are full we send via Mail", receiver, nil, 41, nil, ItemEntry, ItemCount)
         end
     end
 
