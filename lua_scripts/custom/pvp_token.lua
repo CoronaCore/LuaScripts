@@ -11,7 +11,7 @@ local ItemCount = 1                      -- Count of the Item
 local ItemName = GetItemLink(ItemEntry)
 
 
-local function PvPTokenItem(event, killer, killed)
+local function PvPTokenSystem(event, killer, killed)
     local receiver = killer:GetGUIDLow()
 
     if (WorldAnnounce == 1) then
@@ -37,4 +37,4 @@ local function PvPTokenItem(event, killer, killed)
     end
 end
 
-RegisterPlayerEvent(6, PvPTokenItem)
+RegisterPlayerEvent(6, PvPTokenSystem)
