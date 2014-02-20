@@ -26,7 +26,8 @@ function OnPremiumHello(event, player)
     player:GossipMenuAddItem(0, "Show AuctionsHouse", 0, 4)
     player:GossipMenuAddItem(0, "Nevermind..", 0, 1)
     -- Room for more premium things
-    player:GossipSendMenu(1, player, 100)
+    player:GossipSetText("|CFFFF0303Hello "..player:GetName().."|r")
+    player:GossipSendMenu(0x7FFFFFFF, player, 100)
 end
 
 function OnPremiumSelect(event, player, _, sender, intid, code)
