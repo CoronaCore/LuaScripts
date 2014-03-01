@@ -88,7 +88,7 @@ local ITEM_SUBCLASS_WEAPON_GUN          = 3
 local ITEM_SUBCLASS_WEAPON_CROSSBOW     = 18
 local ITEM_SUBCLASS_WEAPON_FISHING_POLE = 20
 
-local PLAYER_VISIBLE_ITEM_1_ENTRYID = 346
+local PLAYER_VISIBLE_ITEM_1_ENTRYID = 260
 
 local INVENTORY_SLOT_BAG_0        = 255
 
@@ -181,7 +181,7 @@ local function DeleteFakeEntry(item)
     if (not GetFakeEntry(item)) then
         return false
     end
-    item:GetOwner():UpdateUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 16), item:GetEntry())
+    item:GetOwner():UpdateUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 12), item:GetEntry())
     DeleteFakeFromDB(item:GetGUIDLow())
     return true
 end
@@ -191,7 +191,7 @@ local function SetFakeEntry(item, entry)
     if(player) then
         local pGUID = player:GetGUIDLow()
         local iGUID = item:GetGUIDLow()
-        player:UpdateUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 16), entry)
+        player:UpdateUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 12), entry)
         if(not entryMap[pGUID]) then
             entryMap[pGUID] = {}
         end
@@ -392,7 +392,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
                         end
                         SetFakeEntry(oldItem, newItem:GetEntry())
                         -- newItem:SetNotRefundable(player)
-                        newItem:SetBinding(true)
+                        newItem:SetBinding(1)
                         -- player:PlayDirectSound(3337)
                         player:SendAreaTriggerMessage(LocText(12, player):format(GetSlotName(sender, player:GetDbcLocale())))
                     else
@@ -436,7 +436,7 @@ local function OnLogin(event, player)
             if (item) then
                 if(entryMap[playerGUID]) then
                     if(entryMap[playerGUID][item:GetGUIDLow()]) then
-                        player:UpdateUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 16), entryMap[playerGUID][item:GetGUIDLow()])
+                        player:UpdateUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 12), entryMap[playerGUID][item:GetGUIDLow()])
                     end
                 end
             end
@@ -456,9 +456,9 @@ local function OnEquip(event, player, item, bag, slot)
             DeleteFakeFromDB(item:GetGUIDLow())
             return
         end
-        player:SetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (slot * 16), fentry)
+        player:SetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (slot * 12), fentry)
     else
-        -- player:SetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (slot * 16), pItem:GetEntry())
+        -- player:SetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (slot * 12), pItem:GetEntry())
     end
 end
 
