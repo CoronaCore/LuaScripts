@@ -1,3 +1,24 @@
+--[[    How to add new locations!
+
+    Example:
+
+    The first line will be the main menu ID (Here [1],
+    increment this for each main menu option!),
+    the main menu gossip title (Here "Horde Cities"),
+    as well as which faction can use the said menu (Here 1 (Horde)).
+    0 = Alliance, 1 = Horde, 2 = Both
+
+    The second line is the name of the main menu's sub menus,
+    separated by name (Here "Orgrimmar") and teleport coordinates
+    using Map, X, Y, Z, O (Here 1, 1503, -4415.5, 22, 0)
+
+    [1] = { "Horde Cities", 1,      --
+    {"Orgrimmar", 1, 1503, -4415.5, 22, 0},
+    },
+
+    You can copy paste the above into the script and change the values as informed.
+]]
+
 local UnitEntry =
  
 local T = {

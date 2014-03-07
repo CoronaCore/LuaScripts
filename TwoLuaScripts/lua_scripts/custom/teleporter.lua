@@ -1,3 +1,25 @@
+--[[    How to add new locations!
+
+    Example:
+
+    The first line will be the main menu ID (Here [1],
+    increment this for each main menu option!),
+    the main menu gossip title (Here "Horde Cities"),
+    as well as which faction can use the said menu (Here 1 (Horde)).
+    0 = Alliance, 1 = Horde, 2 = Both
+
+    The second line is the name of the main menu's sub menus,
+    separated by name (Here "Orgrimmar") and teleport coordinates
+    using Map, X, Y, Z, O (Here 1, 1503, -4415.5, 22, 0)
+
+    [1] = { "Horde Cities", 1,      --
+    {"Orgrimmar", 1, 1503, -4415.5, 22, 0},
+    },
+
+    You can copy paste the above into the script and change the values as informed.
+]]
+
+
 local UnitEntry =
  
 local T = {
@@ -23,7 +45,20 @@ local T = {
                 {"Zangarmarsh", 530, -217, 5488, 23, 2},
                 {"Shattrath", 530, -1822, 5417, 1, 3},
         },
-        [4] = { "PvP Locations", 2,
+        [4] = { "Northrend Locations", 2,
+                {"Borean Tundra", 571, 3230, 5279, 47, 3},
+                {"Crystalsong Forest", 571, 5732, 1016, 175, 3.6},
+                {"Dragonblight", 571, 3547, 274, 46, 1.6},
+                {"Grizzly Hills", 571, 3759, -2672, 177, 3},
+                {"Howling Fjord", 571, 772, -2905, 7, 5},
+                {"Icecrown Glaicer", 571, 8517, 676, 559, 4.7},
+                {"Sholazar Basin", 571, 5571, 5739, -75, 2},
+                {"Storm Peaks", 571, 6121, -1025, 409, 4.7},
+                {"Wintergrasp", 571, 5135, 2840, 408, 3},
+                {"Zul'Drak", 571, 5761, -3547, 387, 5},
+                {"Dalaran", 571, 5826, 470, 659, 1.4},
+        },
+        [5] = { "PvP Locations", 2,
                 {"Gurubashi Arena", 0, -13229, 226, 33, 1},
                 {"Dire Maul Arena", 1, -3669, 1094, 160, 3},
                 {"Nagrand Arena", 530, -1983, 6562, 12, 2},
