@@ -86,12 +86,12 @@ function Player:InitializeWorldState(Map, Zone, StateID, Value)
     data:WriteUShort(1);
     data:WriteULong(StateID);
     data:WriteULong(Value);
-    self:SendPacketToPlayer(data)
+    self:SendPacket(data)
 end
 
 function Player:UpdateWorldState(StateID, Value)
     local data = CreatePacket(SMSG_UPDATE_WORLD_STATE, 8);
     data:WriteULong(StateID);
     data:WriteULong(Value);
-    self:SendPacketToPlayer(data)
+    self:SendPacket(data)
 end
