@@ -13,7 +13,7 @@
     separated by name (Here "Orgrimmar") and teleport coordinates
     using Map, X, Y, Z, O (Here 1, 1503, -4415.5, 22, 0)
 
-    [1] = { "Horde Cities", 1,	--  
+    [1] = { "Horde Cities", 1,	--  This will be the main menu title, as well as which faction can use the said menu. 0 = Alliance, 1 = Horde, 2 = Both
         {"Orgrimmar", 1, 1503, -4415.5, 22, 0},
     },
 
@@ -23,15 +23,17 @@
 local UnitEntry = 1
 
 local T = {
-	[1] = { "Horde Cities", 1, -- This will be the main menu title, as well as which faction can use the said menu. 0 = Alliance, 1 = Horde, 2 = Both
+	[1] = { "Horde Cities", 1,
 		{"Orgrimmar", 1, 1503, -4415.5, 22, 0},
 		{"Undercity", 0, 1831, 238.5, 61.6, 0},
 		{"Thunderbluff", 1, -1278, 122, 132, 0},
+		{"Silvermoon", 530, 9484, -7294, 15, 0},
 	},
 	[2] = { "Alliance Cities", 0,
 		{"Stormwind", 0, -8905, 560, 94, 0.62},
 		{"Ironforge", 0, -4795, -1117, 499, 0},
 		{"Darnassus", 1, 9952, 2280.5, 1342, 1.6},
+		{"The Exodar", 530, -3863, -11736, -106, 2},
 	},
 	[3] = { "PvP Locations", 2,
 		{"Gurubashi Arena", 0, -13229, 226, 33, 1},
@@ -71,7 +73,7 @@ local function OnGossipSelect(event, player, unit, sender, intid, code)
         return
     else
         -- teleport
-        local name, map, x, y, z, o = table.unpack(T[sender][action])
+        local name, map, x, y, z, o = table.unpack(T[sender][intid])
         player:Teleport(map, x, y, z, o)
     end
     
