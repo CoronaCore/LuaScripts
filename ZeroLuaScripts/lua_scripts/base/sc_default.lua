@@ -95,3 +95,31 @@ function Player:UpdateWorldState(StateID, Value)
     data:WriteULong(Value);
     self:SendPacket(data)
 end
+
+function ChatMsg(type)
+    if (type == 0x00) then
+        return("System")
+    elseif (type == 0x01) then
+        return("Says")
+    elseif (type == 0x02) then
+        return("Party")
+    elseif (type == 0x03) then
+        return("Raid")
+    elseif (type == 0x04) then
+        return("Guild["..pg.."]")
+    elseif (type == 0x05) then
+        return("Guild Officer["..pg.."]")
+    elseif (type == 0x06) then
+        return("Yells")
+    elseif (type == 0x07) then
+        return("Whisper")
+    elseif (type == 0x11) then
+        return("(General/Trade/Local Defense/LFG/Custom)")
+    elseif (type == 0x2C) then
+        return("Battleground")
+    elseif (type == 0x2D) then
+        return("Battleground Leader")
+    else
+        return(type)
+    end
+end
