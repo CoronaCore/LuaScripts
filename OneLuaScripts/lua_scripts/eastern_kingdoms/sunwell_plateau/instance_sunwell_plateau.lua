@@ -44,9 +44,9 @@ end
 local function ActiveProtector(eventId, delay, repeats, creature)
     local target = creature:GetNearestPlayer(1000) -- HACK: Must be set same target as caster
     if (target) then
-	    creature:MoveChase(target)
-		creature:AttackStart(target)
-	end
+        creature:MoveChase(target)
+        creature:AttackStart(target)
+     end
 end
 
 local function SunbaldeProtectorOnHitBySpell(event, creature, caster, spellid)
