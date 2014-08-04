@@ -41,17 +41,14 @@ local function SunbladeScoutOnWp(event, creature, type, id)
     end
 end
 
-local function ActiveProtector(eventId, delay, repeats, creature)
-    local target = creature:GetNearestPlayer(1000) -- HACK: Must be set same target as caster
-    if (target) then
-        creature:MoveChase(target)
-        creature:AttackStart(target)
-     end
+local function ActiveProtector(eventId, delay, repeats, creature, caster)
+     caster:SendUnitYell(SAY_SUNBLADE_SCOUT_1, 0)
+     creature:SendUnitYell(SAY_SUNBLADE_SCOUT_1, 0)
 end
 
 local function SunbaldeProtectorOnHitBySpell(event, creature, caster, spellid)
 	if (spellid == 46475) then
-	    creature:RegisterEvent(ActiveProtector, 6000, 1) -- Must Event Stop wehn caster is dead befor the creature come active
+        creature:RegisterEvent(function(a,b,c,d) ActiveProtector,(a,b,c,d, caster:GetGUID()) end, 6000, 1)
     end
 end
 
