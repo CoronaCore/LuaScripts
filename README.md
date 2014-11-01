@@ -1,1 +1,1 @@
-# ![logo](http://www.imgbox.de/users/public/images/2g9ul55zmA.png)
+# ![logo](https://raw.githubusercontent.com/CoronaCore/TestServer/master/images/logo.png)
