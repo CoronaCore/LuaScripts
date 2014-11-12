@@ -1,8 +1,8 @@
---
--- Kobold Vermin - Random Say on Aggro
--- NPC Entry 6
--- Script Complete 100%
---
+--[==[
+    Kobold Vermin - Random Say on Aggro
+    NPC Entry 6
+    Script Complete 100%
+]==]
 
 NPC_KOBOLD_VERMIN = 6
 
@@ -26,11 +26,11 @@ end
 RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 1, KoboldVerminOnEnterCombat)
 RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 2, KoboldVerminOnLeaveCombat)
 
---
--- Defias Thug - Random Say on Aggro
--- NPC Entry 38
--- Script Complete 100%
---
+--[==[
+    Defias Thug - Random Say on Aggro
+    NPC Entry 38
+    cript Complete 100%
+]==]
 
 NPC_DEFIAS_THUG = 38
 
@@ -57,11 +57,11 @@ end
 RegisterCreatureEvent(NPC_DEFIAS_THUG, 1, DefiasThugOnEnterCombat)
 RegisterCreatureEvent(NPC_DEFIAS_THUG, 2, DefiasThugOnLeaveCombat)
 
---
--- Thuros Lightfingers - Random Say on Aggro
--- NPC Entry 61
--- Script Complete 100%
---
+--[==[
+    Thuros Lightfingers - Random Say on Aggro
+    NPC Entry 61
+    Script Complete 100%
+]==]
 
 NPC_THUROS_LIGHTFINGERS = 61
 
@@ -88,11 +88,11 @@ end
 RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 1, ThurosLightfingersOnEnterCombat)
 RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 2, ThurosLightfingersOnLeaveCombat)
 
---
--- Kobold Labourer - Random Say on Aggro
--- NPC Entry 80
--- Script Complete 100%
---
+--[==[
+    Kobold Labourer - Random Say on Aggro
+    NPC Entry 80
+    Script Complete 100%
+]==]
 
 NPC_KOBOLD_LABOURER = 80
 
