@@ -1,7 +1,9 @@
+--[==[
+    NOTE: need to insert character_premium.sql in your characters database
+]==]
+
 -- Include sc_default
 require "lua_scripts/base/sc_default"
-
--- NOTE: need to insert character_premium.sql in your characters database
 
 local function PremiumOnLogin(event, player)  -- Send a welcome massage to player and tell him is premium or not
     local result = CharDBQuery("SELECT AccountId FROM premium WHERE active=1 and AccountId = "..player:GetAccountId())
