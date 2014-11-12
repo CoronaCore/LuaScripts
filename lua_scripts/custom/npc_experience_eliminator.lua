@@ -1,3 +1,7 @@
+--[==[
+    NOTE: Works only with OneServer->develop branch
+]==]
+
 -- Include sc_default
 require "lua_scripts/base/sc_default"
 
