@@ -8,7 +8,7 @@
 local NPC_SUNBLADE_SCOUT = 25372
 local NPC_SUNBLADE_PROTECTOR = 25507
 
-local SAY_SUNBLADE_SCOUT_1 = "Balalalalala"
+local SAY_SUNBLADE_SCOUT_1 = "Balalalalala"  -- not right text
 
 local function SunbladeScoutGoProtector(eventId, delay, repeats, creature)
     creature:MoveIdle()
