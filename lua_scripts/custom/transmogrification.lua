@@ -308,7 +308,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
                             if(RequireToken) then
                                 popup = popup.."\n"..TokenAmount.." x "..GetItemLink(TokenEntry, player:GetDbcLocale())
                             end
-                            player:GossipMenuAddItem(4, newItem:GetItemLink(player:GetDbcLocale()), uiAction, display, false, popup, price)
+                            player:GossipMenuAddItem(4, newItem:GetItemLink(player:GetDbcLocale()), uiAction, display, false, popup)
                         end
                     end
                 end
@@ -328,7 +328,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
                                 if (not _items[lowGUID][display]) then
                                     limit = limit + 1
                                     _items[lowGUID][display] = newItem
-                                    player:GossipMenuAddItem(4, newItem:GetItemLink(player:GetDbcLocale()), uiAction, display, false, popup, price)
+                                    player:GossipMenuAddItem(4, newItem:GetItemLink(player:GetDbcLocale()), uiAction, display, false, popup)
                                 end
                             end
                         end
