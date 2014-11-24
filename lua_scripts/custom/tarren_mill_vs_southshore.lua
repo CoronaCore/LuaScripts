@@ -1,7 +1,7 @@
 --[==[
     NOTE: Very Alpha and still in developement
 
-	Commands:
+    Commands:
        #SetQueue                  -- Join Queue for Battle // will be Change later to Creature Gossip
        #RemoveQueue               -- Leave Queue for Battle // will be Change later to Creature Gossip
        #HasQueue                  -- Returns you in Queue or not
