@@ -123,3 +123,42 @@ function ChatMsg(type)
         return(type)
     end
 end
+
+function CreateQueue()
+    local Queue = {Queue = {}}
+
+    function Queue:Set(index)
+        if (self:Has(index)) then
+            return false
+        end
+        self.Queue[index] = true
+        return true
+    end
+
+    function Queue:Remove(index)
+        if (not self:Has(index)) then
+            return false
+        end
+        self.Queue[index] = nil
+        return true
+    end
+
+    function Queue:Has(index)
+        return self.Queue[index] ~= nil
+    end
+
+    function Queue:Get()
+        return self.Queue
+    end
+
+    local pairs = pairs
+    function Queue:Count()
+        local count = 0
+        for k,v in pairs(self.Queue) do
+            count = count + 1
+        end
+        return count
+    end
+
+    return Queue
+end
