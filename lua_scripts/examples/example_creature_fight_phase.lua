@@ -2,45 +2,79 @@ local NPC_EXAMPLE =
 
 local NpcExample = {}
 
+local NpcExampleSay= {
+    [1] = "Start Phase 1",
+    [2] = "Phase 1 runs",
+    [3] = "Start Phase 2",
+    [4] = "Phase 2 runs",
+    [5] = "Start Phase 3",
+    [6] = "Phase 3 runs",
+    [7] = "Start Phase 4";
+    [8] = "Phase 4 runs",
+    [9] = "On Leave Combat",
+    [10] = "On Target Died",
+    [11] = "On Died";
+};
+
 function NpcExample.OnEnterCombat(event, creature, target)        -- Start Phase 1 at 100% Health
-    creature:SendUnitSay("Phase 1", 0, target)
+    creature:SendUnitSay(NpcExampleSay[1], 0, target)
+    creature:RegisterEvent(NpcExample.OnPhase_1_Say, 5000, 0)
     creature:RegisterEvent(NpcExample.OnPhase_2, 1000, 0)         -- Check for next Phase
+end
+
+function NpcExample.OnPhase_1_Say(event, delay, pCall, creature)
+    creature:SendUnitSay(NpcExampleSay[2], 0, target)
 end
 
 function NpcExample.OnPhase_2(event, delay, pCall, creature)
     if (creature:GetHealthPct() <= 75) then                       -- Start Phase 2 at 75% Health
         creature:RemoveEvents()
-        creature:SendUnitSay("Phase 2", 0, target)
+        creature:SendUnitSay(NpcExampleSay[3], 0, target)
+        creature:RegisterEvent(NpcExample.OnPhase_2_Say, 5000, 0)
         creature:RegisterEvent(NpcExample.OnPhase_3, 1000, 0)     -- Check for next Phase
     end
+end
+
+function NpcExample.OnPhase_2_Say(event, delay, pCall, creature)
+    creature:SendUnitSay(NpcExampleSay[4], 0, target)
 end
 
 function NpcExample.OnPhase_3(event, delay, pCall, creature)
     if (creature:GetHealthPct() <= 50) then                       -- Start Phase 3 at 50% Health
         creature:RemoveEvents()
-        creature:SendUnitSay("Phase 3", 0, target)
+        creature:SendUnitSay(NpcExampleSay[5], 0, target)
+        creature:RegisterEvent(NpcExample.OnPhase_3_Say, 5000, 0)
         creature:RegisterEvent(NpcExample.OnPhase_4, 1000, 0)     -- Check for next Phase
     end
+end
+
+function NpcExample.OnPhase_3_Say(event, delay, pCall, creature)
+    creature:SendUnitSay(NpcExampleSay[6], 0, target)
 end
 
 function NpcExample.OnPhase_4(event, delay, pCall, creature)
     if (creature:GetHealthPct() <= 25) then                       -- Start Phase 4 at 25% Health
         creature:RemoveEvents()
-        creature:SendUnitSay("Phase 4", 0, target)
+        creature:SendUnitSay(NpcExampleSay[7], 0, target)
+        creature:RegisterEvent(NpcExample.OnPhase_4_Say, 5000, 0)
     end
 end
 
+function NpcExample.OnPhase_4_Say(event, delay, pCall, creature)
+    creature:SendUnitSay(NpcExampleSay[8], 0, target)
+end
+
 function NpcExample.OnLeaveCombat(event, creature)
-    creature:SendUnitSay("On Leave Combat", 0, target)
+    creature:SendUnitSay(NpcExampleSay[9], 0, target)
     creature:RemoveEvents()
 end
 
 function NpcExample.OnTargetDied(event, creature, victim)
-    creature:SendUnitSay("On Target Died", 0, target)
+    creature:SendUnitSay(NpcExampleSay[10], 0, target)
 end
 
 function NpcExample.OnDied(event, creature, killer)
-    creature:SendUnitSay("On Died", 0, target)
+    creature:SendUnitSay(NpcExampleSay[11], 0, target)
     creature:RemoveEvents()
 end
 
