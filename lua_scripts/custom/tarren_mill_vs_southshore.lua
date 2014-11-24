@@ -7,9 +7,9 @@ require "lua_scripts/base/sc_default"
 
 local QueueSystem= {
     ["BattleZone"] = {"|CFFFF0303Tarren Mill vs. Southshore|r", 0, 267},
-    ["MinCountAlliance"] = 1,
-    ["MinCountHorde"] = 0,
-    ["MaxScore"] = 2,
+    ["MinCountAlliance"] = 50,
+    ["MinCountHorde"] = 50,
+    ["MaxScore"] = 150,
     [0] = 0,
     [1] = 0;
 };
