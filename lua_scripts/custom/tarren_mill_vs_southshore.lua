@@ -51,10 +51,10 @@ local GUID = player:GetGUID()
         end
     elseif (msg == "#HasQueue") then
         if QueueAlliance:Has(GUID) or QueueHorde:Has(GUID) then
-		    player:SendBroadcastMessage("You IN Queue for "..QueueSystem["BattleZone"][1].."")
-		else
-		    player:SendBroadcastMessage("You NOT in Queue for "..QueueSystem["BattleZone"][1].."")
-		end
+            player:SendBroadcastMessage("You IN Queue for "..QueueSystem["BattleZone"][1].."")
+        else
+            player:SendBroadcastMessage("You NOT in Queue for "..QueueSystem["BattleZone"][1].."")
+        end
     elseif (msg == "#CountQueue") then
         player:SendBroadcastMessage("Queue "..QueueSystem["BattleZone"][1].." |CFF0042FFAlliance|r "..QueueAlliance:Count().."/"..QueueSystem["MinCountAlliance"].." Queue |CFFFF0303Horde|r "..QueueHorde:Count().."/"..QueueSystem["MinCountHorde"].."")
     end
@@ -91,12 +91,12 @@ local GUID = player:GetGUID()
         if (player:GetTeam() == 0) then
             QueueAlliance:Remove(GUID)
             player:RemoveAura(32609)
-			player:SaveToDB()
+            player:SaveToDB()
             print("[Queue System] Player "..player:GetName().." Leave Queue")
         else
             QueueHorde:Remove(GUID)
             player:RemoveAura(32610)
-			player:SaveToDB()
+            player:SaveToDB()
             print("[Queue System] Player "..player:GetName().." Leave Queue")
         end
     end
@@ -109,21 +109,21 @@ local GUID = player:GetGUID()
         player:UpdateWorldState(2317, QueueSystem["MaxScore"])
         player:UpdateWorldState(2313, QueueSystem[0])
         player:UpdateWorldState(2314, QueueSystem[1])
-	end	
+    end
 
     if (player:GetTeam() == 0) then
         if (player:GetZoneId() == QueueSystem["BattleZone"][3]) then
 --
         else
             player:RemoveAura(32609)
-			QueueAlliance:Remove(GUID)
+            -- QueueAlliance:Remove(GUID)
         end
     else
         if (player:GetZoneId() == QueueSystem["BattleZone"][3]) then
 --
         else
             player:RemoveAura(32610)
-			QueueHorde:Remove(GUID)
+            -- QueueHorde:Remove(GUID)
         end
     end
 end
