@@ -1,6 +1,11 @@
 -- Include sc_default
 require "lua_scripts/base/sc_default"
 
+local QueueSettings= {
+    ["MinCountAlliance"] = 10,
+    ["MinCountHorde"] = 10,
+};
+
 local QueueAlliance = CreateQueue()
 local QueueHorde = CreateQueue()
 
@@ -9,9 +14,11 @@ local GUID = player:GetGUID()
     if (msg == "#SetQueue") then
         if (player:GetTeam() == 0) then
             QueueAlliance:Set(GUID)
+            player:RegisterEvent(QueueCheck, 10000, 0)
             player:SendBroadcastMessage("Join Queue")
         else
             QueueHorde:Set(GUID)
+            player:RegisterEvent(QueueCheck, 10000, 0)
             player:SendBroadcastMessage("Join Queue")
         end
     elseif (msg == "#RemoveQueue") then
@@ -29,7 +36,16 @@ local GUID = player:GetGUID()
             player:SendBroadcastMessage("You not in Queue")
         end
     elseif (msg == "#CountQueue") then
-        player:SendBroadcastMessage("Queue Alliance "..QueueAlliance:Count().." Queue Horde "..QueueHorde:Count().."")
+        player:SendBroadcastMessage("Queue |CFF0042FFAlliance|r "..QueueAlliance:Count().."/"..QueueSettings["MinCountAlliance"].." Queue |CFFFF0303Horde|r "..QueueHorde:Count().."/"..QueueSettings["MinCountHorde"].."")
+    end
+end
+
+function QueueCheck(event, delay, pCall, player)
+    if (QueueAlliance:Count() == QueueSettings["MinCountAlliance"] and QueueHorde:Count() == QueueSettings["MinCountHorde"]) then
+        player:SendBroadcastMessage("Queue Full")
+        player:RemoveEvents()
+    else
+        player:SendBroadcastMessage("Queue |CFF0042FFAlliance|r "..QueueAlliance:Count().."/"..QueueSettings["MinCountAlliance"].." Queue |CFFFF0303Horde|r "..QueueHorde:Count().."/"..QueueSettings["MinCountHorde"].."")
     end
 end
 
