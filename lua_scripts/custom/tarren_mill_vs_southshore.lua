@@ -1,5 +1,11 @@
 --[==[
     NOTE: Very Alpha and still in developement
+
+	Commands:
+       #SetQueue                  -- Join Queue for Battle // will be Change later to Creature Gossip
+       #RemoveQueue               -- Leave Queue for Battle // will be Change later to Creature Gossip
+       #HasQueue                  -- Returns you in Queue or not
+       #CountQueue                -- Returns the count of alliance and horde Queue
 ]==]
 
 -- Include sc_default
@@ -7,9 +13,9 @@ require "lua_scripts/base/sc_default"
 
 local QueueSystem= {
     ["BattleZone"] = {"|CFFFF0303Tarren Mill vs. Southshore|r", 0, 267},
-    ["MinCountAlliance"] = 50,
-    ["MinCountHorde"] = 50,
-    ["MaxScore"] = 150,
+    ["MinCountAlliance"] = 50,   -- Alliance Player what needed to open the Battle
+    ["MinCountHorde"] = 50,      -- Horde Player what needed to open the Battle
+    ["MaxScore"] = 150,          -- Kill Count what needed to win the Battle
     [0] = 0,
     [1] = 0;
 };
@@ -25,11 +31,11 @@ local GUID = player:GetGUID()
         else
             if (player:GetTeam() == 0) then
                 QueueAlliance:Set(GUID)
-                player:RegisterEvent(QueueCheck, 10000, 0)
+                player:RegisterEvent(QueueCheck, 10000, 0)    -- Check all 10 seconds the Queue
                 player:SendBroadcastMessage("Join Queue for "..QueueSystem["BattleZone"][1].."")
             else
                 QueueHorde:Set(GUID)
-                player:RegisterEvent(QueueCheck, 10000, 0)
+                player:RegisterEvent(QueueCheck, 10000, 0)    -- Check all 10 seconds the Queue
                 player:SendBroadcastMessage("Join Queue for "..QueueSystem["BattleZone"][1].."")
             end
         end
@@ -37,12 +43,12 @@ local GUID = player:GetGUID()
         if QueueAlliance:Has(GUID) or QueueHorde:Has(GUID) then
             if (player:GetTeam() == 0) then
                 QueueAlliance:Remove(GUID)
-                player:RemoveAura(32609)
+                player:RemoveAura(32609)                       -- Remove aura wehn player leave the Queue
                 player:SendBroadcastMessage("Leave Queue "..QueueSystem["BattleZone"][1].."")
                 print("[Queue System] Player "..player:GetName().." Leave Queue")
             else
                 QueueHorde:Remove(GUID)
-                player:RemoveAura(32610)
+                player:RemoveAura(32610)                       -- Remove aura wehn player leave the Queue
                 player:SendBroadcastMessage("Leave Queue "..QueueSystem["BattleZone"][1].."")
                 print("[Queue System] Player "..player:GetName().." Leave Queue")
             end
