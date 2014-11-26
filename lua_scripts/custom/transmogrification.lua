@@ -263,7 +263,7 @@ local menu_id = math.random(1000)
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
     for slot = EQUIPMENT_SLOT_START, EQUIPMENT_SLOT_END-1 do
-        local newItem = player:GetItemByPos(255, slot)
+        local newItem = player:GetItemByPos(INVENTORY_SLOT_BAG_0, slot)
         if (newItem) then
             if (Qualities[newItem:GetQuality()]) then
                 local slotName = GetSlotName(slot, player:GetDbcLocale())
@@ -281,7 +281,7 @@ end
 local _items = {}
 local function OnGossipSelect(event, player, creature, sender, uiAction)
     if sender == EQUIPMENT_SLOT_END then -- Show items you can use
-        local oldItem = player:GetItemByPos(255, uiAction)
+        local oldItem = player:GetItemByPos(INVENTORY_SLOT_BAG_0, uiAction)
         if (oldItem) then
             local lowGUID = player:GetGUIDLow()
             _items[lowGUID] = {} -- Remove this with logix
@@ -297,7 +297,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
                 if (limit > 30) then
                     break
                 end
-                local newItem = player:GetItemByPos(255, i)
+                local newItem = player:GetItemByPos(INVENTORY_SLOT_BAG_0, i)
                 if (newItem) then
                     local display = newItem:GetDisplayId()
                     if (SuitableForTransmogrification(player, oldItem, newItem)) then
@@ -315,7 +315,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
             end
 
             for i = INVENTORY_SLOT_BAG_START, INVENTORY_SLOT_BAG_END-1 do
-                local bag = player:GetItemByPos(255, i)
+                local bag = player:GetItemByPos(INVENTORY_SLOT_BAG_0, i)
                 if (bag) then
                     for j = 0, bag:GetBagSize()-1 do
                         if (limit > 30) then
@@ -347,7 +347,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
     elseif sender == EQUIPMENT_SLOT_END+2 then -- Remove Transmogrifications
         local removed = false
         for slot = EQUIPMENT_SLOT_START, EQUIPMENT_SLOT_END-1 do
-            local newItem = player:GetItemByPos(255, slot)
+            local newItem = player:GetItemByPos(INVENTORY_SLOT_BAG_0, slot)
             if (newItem) then
                 if (DeleteFakeEntry(newItem) and not removed) then
                     removed = true
@@ -362,7 +362,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
         end
         OnGossipHello(event, player, creature)
     elseif sender == EQUIPMENT_SLOT_END+3 then -- Remove Transmogrification from single item
-        local newItem = player:GetItemByPos(255, uiAction)
+        local newItem = player:GetItemByPos(INVENTORY_SLOT_BAG_0, uiAction)
         if (newItem) then
             if (DeleteFakeEntry(newItem)) then
                 player:SendAreaTriggerMessage(LocText(10, player):format(GetSlotName(uiAction, player:GetDbcLocale())))
@@ -375,7 +375,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
     else -- Transmogrify
         local lowGUID = player:GetGUIDLow()
         if(not RequireToken or player:GetItemCount(TokenEntry) >= TokenAmount) then
-            local oldItem = player:GetItemByPos(255, sender)
+            local oldItem = player:GetItemByPos(INVENTORY_SLOT_BAG_0, sender)
             if (oldItem) then
                 if (_items[lowGUID] and _items[lowGUID][uiAction] and _items[lowGUID][uiAction]) then
                     local newItem = _items[lowGUID][uiAction]
@@ -432,7 +432,7 @@ local function OnLogin(event, player)
         until not result:NextRow()
 
         for slot = EQUIPMENT_SLOT_START, EQUIPMENT_SLOT_END-1 do
-            local item = player:GetItemByPos(255, slot)
+            local item = player:GetItemByPos(INVENTORY_SLOT_BAG_0, slot)
             if (item) then
                 if(entryMap[playerGUID]) then
                     if(entryMap[playerGUID][item:GetGUIDLow()]) then
