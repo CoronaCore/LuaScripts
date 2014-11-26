@@ -8,9 +8,14 @@
 local NPC_SUNBLADE_SCOUT = 25372
 local NPC_SUNBLADE_PROTECTOR = 25507
 
-local SAY_SUNBLADE_SCOUT_1 = "Balalalalala"  -- not right text
+local SunbladeScout = {}
+local SunbaldeProtector = {}
 
-local function SunbladeScoutGoProtector(eventId, delay, repeats, creature)
+local SunbladeScoutSay= {
+    [1] = "not right text";
+};
+
+function SunbladeScout.GoProtector(eventId, delay, repeats, creature)
     creature:MoveIdle()
     creature:SetWalk(false)
     local target = creature:GetNearestCreature(1000, NPC_SUNBLADE_PROTECTOR)
@@ -18,20 +23,20 @@ local function SunbladeScoutGoProtector(eventId, delay, repeats, creature)
     creature:MoveTo(1, x, y, z)
 end
  
-local function SunbladeScoutOnEnterCombat(event, creature, player)
-    creature:SendUnitYell(SAY_SUNBLADE_SCOUT_1, 0)
+function SunbladeScout.OnEnterCombat(event, creature, player)
+    creature:SendUnitYell(SunbladeScoutSay[1], 0)
     creature:SetFlag(59, 0x00020000)
     creature:SetFlag(60, 0x00008000)
-    creature:RegisterEvent(SunbladeScoutGoProtector, 0, 1)
+    creature:RegisterEvent(SunbladeScout.GoProtector, 0, 1)
 end
  
-local function Enable(eventId, delay, repeats, creature)
+function Enable(eventId, delay, repeats, creature)
     creature:RemoveFlag(59, 0x00020000)
     creature:RemoveFlag(60, 0x00008000)
     creature:MoveChase(creature:GetVictim())
 end
  
-local function SunbladeScoutOnWp(event, creature, type, id)
+function SunbladeScout.OnWp(event, creature, type, id)
     if (type == 8 and id == 1) then
         local target = creature:GetNearestCreature(100, NPC_SUNBLADE_PROTECTOR)
         if(target) then
@@ -41,38 +46,30 @@ local function SunbladeScoutOnWp(event, creature, type, id)
     end
 end
 
-local function ActiveProtector(eventId, delay, repeats, creature, caster)
-     caster:SendUnitYell(SAY_SUNBLADE_SCOUT_1, 0)
+function Active(eventId, delay, repeats, creature, caster)
      creature:SendUnitYell(SAY_SUNBLADE_SCOUT_1, 0)
 end
 
-local function SunbaldeProtectorOnHitBySpell(event, creature, caster, spellid)
+function SunbaldeProtector.OnHitBySpell(event, creature, caster, spellid)
 	if (spellid == 46475) then
-        creature:RegisterEvent(function(a,b,c,d) ActiveProtector,(a,b,c,d, caster:GetGUID()) end, 6000, 1)
+        creature:RegisterEvent(function(a,b,c,d) Active(a,b,c,d, caster:GetGUID()) end, 6000, 1)
     end
 end
 
-local function SunbladeScoutOnReset(event, creature)
+function SunbladeScout.Reset(event, creature)
     creature:RemoveFlag(59, 0x00020000)
     creature:RemoveFlag(60, 0x00008000)
     creature:MoveWaypoint()
     creature:SetWalk(true)
 end
  
-local function SunbladeScoutOnLeaveCombat(event, creature)
-    creature:RemoveFlag(59, 0x00020000)
-    creature:RemoveFlag(60, 0x00008000)
-    creature:MoveWaypoint()
-    creature:SetWalk(true)
-end
-
-local function SunbladeScoutOnDied(event, creature, killer)
+function SunbladeScout.OnDied(event, creature, killer)
     creature:RemoveEvents()
 end
 
-RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 1, SunbladeScoutOnEnterCombat)
-RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 6, SunbladeScoutOnWp)
-RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 24, SunbladeScoutOnLeaveCombat)
-RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 23, SunbladeScoutOnReset)
-RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 4, SunbladeScoutOnDied)
-RegisterCreatureEvent(NPC_SUNBLADE_PROTECTOR, 14, SunbaldeProtectorOnHitBySpell)
+RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 1, SunbladeScout.OnEnterCombat)
+RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 6, SunbladeScout.OnWp)
+RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 24, SunbladeScout.Reset)
+RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 23, SunbladeScout.Reset)
+RegisterCreatureEvent(NPC_SUNBLADE_SCOUT, 4, SunbladeScout.OnDied)
+RegisterCreatureEvent(NPC_SUNBLADE_PROTECTOR, 14, SunbaldeProtector.OnHitBySpell)
