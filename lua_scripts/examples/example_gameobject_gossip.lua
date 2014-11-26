@@ -1,4 +1,4 @@
-local GobId =
+local GO_Entry =
 
 local function OnGossipHello(event, player, go)
     player:GossipMenuAddItem(0, "Test Eluna Gossip GameObject", 0, 1)
@@ -14,5 +14,5 @@ local function OnGossipSelect(event, player, go, sender, intid, code)
     end
 end
 
-RegisterGameObjectGossipEvent(GobId, 1, OnGossipHello)
-RegisterGameObjectGossipEvent(GobId, 2, OnGossipSelect)
+RegisterGameObjectGossipEvent(GO_Entry, 1, OnGossipHello)
+RegisterGameObjectGossipEvent(GO_Entry, 2, OnGossipSelect)

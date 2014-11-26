@@ -1,12 +1,14 @@
-local NpcId =
-local QuestId =
+local NPC_ENTRY =
+local QUEST_ENTRY =
 
-local SAY_01 = "Example OnQuestReward Works"
+local NpcSay= {
+    [1] = "Example OnQuestReward Works";
+};
 
 local function OnQuestReward(event, player, creature, quest)
-    if (quest:GetId() == QuestId) then
-        creature:SendUnitSay(SAY_01, 0)
+    if (quest:GetId() == QUEST_ENTRY) then
+        creature:SendUnitSay(NpcSay[1], 0)
     end
 end
 
-RegisterCreatureEvent(NpcId, 34, OnQuestReward)
+RegisterCreatureEvent(NPC_ENTRY, 34, OnQuestReward)
