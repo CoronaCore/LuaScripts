@@ -6,16 +6,18 @@
 
 NPC_KOBOLD_VERMIN = 6
 
-local SAY_KOBOLD_VERMIN_1 = "You no take candle!"
-local SAY_KOBOLD_VERMIN_2 = "Yiieeeee! Me run!"
+local NpcKoboldVerminSay= {
+    [1] = "You no take candle!",
+    [2] = "Yiieeeee! Me run!";
+};
 
 local function KoboldVerminOnEnterCombat(event, creature, target)
     local chance = math.random(1, 2)
 
     if (chance == 1) then
-        creature:SendUnitSay(SAY_KOBOLD_VERMIN_1, 0)
+        creature:SendUnitSay(NpcKoboldVerminSay[1], 0)
     elseif (chance == 2) then
-        creature:SendUnitSay(SAY_KOBOLD_VERMIN_2, 0)
+        creature:SendUnitSay(NpcKoboldVerminSay[2], 0)
     end
 end
 
@@ -34,19 +36,21 @@ RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 2, KoboldVerminOnLeaveCombat)
 
 NPC_DEFIAS_THUG = 38
 
-local SAY_DEFIAS_THUG_1 = "The Brotherhood will not tolerate your actions."
-local SAY_DEFIAS_THUG_2 = "Ah, a chance to use this freshly sharpened blade."
-local SAY_DEFIAS_THUG_3 = "Feel the power of the Brotherhood!"
+local NpcDefiasThugSay= {
+    [1] = "The Brotherhood will not tolerate your actions.",
+    [2] = "Ah, a chance to use this freshly sharpened blade.",
+    [3] = "Feel the power of the Brotherhood!";
+};
 
 local function DefiasThugOnEnterCombat(event, creature, target)
     local chance = math.random(1, 3)
 
     if (chance == 1) then
-        creature:SendUnitSay(SAY_DEFIAS_THUG_1, 0)
+        creature:SendUnitSay(NpcDefiasThugSay[1], 0)
     elseif (chance == 2) then
-        creature:SendUnitSay(SAY_DEFIAS_THUG_2, 0)
+        creature:SendUnitSay(NpcDefiasThugSay[2], 0)
     elseif (chance == 3) then
-        creature:SendUnitSay(SAY_DEFIAS_THUG_3, 0)
+        creature:SendUnitSay(NpcDefiasThugSay[3], 0)
     end
 end
 
@@ -65,19 +69,21 @@ RegisterCreatureEvent(NPC_DEFIAS_THUG, 2, DefiasThugOnLeaveCombat)
 
 NPC_THUROS_LIGHTFINGERS = 61
 
-local SAY_THUROS_LIGHTFINGERS_1 = "The Brotherhood will not tolerate your actions."
-local SAY_THUROS_LIGHTFINGERS_2 = "Ah, a chance to use this freshly sharpened blade."
-local SAY_THUROS_LIGHTFINGERS_3 = "Feel the power of the Brotherhood!"
+local NpcThurosLightfingersSay= {
+    [1] = "The Brotherhood will not tolerate your actions.",
+    [2] = "Ah, a chance to use this freshly sharpened blade.",
+    [3] = "Feel the power of the Brotherhood!";
+};
 
 local function ThurosLightfingersOnEnterCombat(event, creature, target)
     local chance = math.random(1, 3)
 
     if (chance == 1) then
-        creature:SendUnitSay(SAY_THUROS_LIGHTFINGERS_1, 0)
+        creature:SendUnitSay(NpcThurosLightfingersSay[1], 0)
     elseif (chance == 2) then
-        creature:SendUnitSay(SAY_THUROS_LIGHTFINGERS_2, 0)
+        creature:SendUnitSay(NpcThurosLightfingersSay[2], 0)
     elseif (chance == 3) then
-        creature:SendUnitSay(SAY_THUROS_LIGHTFINGERS_3, 0)
+        creature:SendUnitSay(NpcThurosLightfingersSay[3], 0)
     end
 end
 
@@ -96,16 +102,18 @@ RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 2, ThurosLightfingersOnLeaveComba
 
 NPC_KOBOLD_LABOURER = 80
 
-local SAY_KOBOLD_LABOURER_1 = "You no take candle!"
-local SAY_KOBOLD_LABOURER_2 = "Yiieeeee! Me run!"
+local NpcKoboldLabourerSay= {
+    [1] = "You no take candle!",
+    [2] = "Yiieeeee! Me run!";
+};
 
 local function KoboldLabourerOnEnterCombat(event, creature, target)
     local chance = math.random(1, 2)
 
     if (chance == 1) then
-        creature:SendUnitSay(SAY_KOBOLD_LABOURER_1, 0)
+        creature:SendUnitSay(NpcKoboldLabourerSay[1], 0)
     elseif (chance == 2) then
-        creature:SendUnitSay(SAY_KOBOLD_LABOURER_2, 0)
+        creature:SendUnitSay(NpcKoboldLabourerSay[2], 0)
     end
 end
 
