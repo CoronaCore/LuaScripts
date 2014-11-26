@@ -4,14 +4,16 @@
     Script Complete 100%
 ]==]
 
-NPC_KOBOLD_VERMIN = 6
+local NPC_KOBOLD_VERMIN = 6
+
+local KoboldVermin = {}
 
 local NpcKoboldVerminSay= {
     [1] = "You no take candle!",
     [2] = "Yiieeeee! Me run!";
 };
 
-local function KoboldVerminOnEnterCombat(event, creature, target)
+function KoboldVermin.OnEnterCombat(event, creature, target)
     local chance = math.random(1, 2)
 
     if (chance == 1) then
@@ -21,12 +23,12 @@ local function KoboldVerminOnEnterCombat(event, creature, target)
     end
 end
 
-local function KoboldVerminOnLeaveCombat(event, creature)
+function KoboldVermin.OnLeaveCombat(event, creature)
     creature:RemoveEvents()
 end
 
-RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 1, KoboldVerminOnEnterCombat)
-RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 2, KoboldVerminOnLeaveCombat)
+RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 1, KoboldVermin.OnEnterCombat)
+RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 2, KoboldVermin.OnLeaveCombat)
 
 --[==[
     Defias Thug - Random Say on Aggro
@@ -34,7 +36,9 @@ RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 2, KoboldVerminOnLeaveCombat)
     cript Complete 100%
 ]==]
 
-NPC_DEFIAS_THUG = 38
+local NPC_DEFIAS_THUG = 38
+
+local DefiasThug = {}
 
 local NpcDefiasThugSay= {
     [1] = "The Brotherhood will not tolerate your actions.",
@@ -42,7 +46,7 @@ local NpcDefiasThugSay= {
     [3] = "Feel the power of the Brotherhood!";
 };
 
-local function DefiasThugOnEnterCombat(event, creature, target)
+function DefiasThug.OnEnterCombat(event, creature, target)
     local chance = math.random(1, 3)
 
     if (chance == 1) then
@@ -54,12 +58,12 @@ local function DefiasThugOnEnterCombat(event, creature, target)
     end
 end
 
-local function DefiasThugOnLeaveCombat(event, creature)
+function DefiasThug.OnLeaveCombat(event, creature)
     creature:RemoveEvents()
 end
 
-RegisterCreatureEvent(NPC_DEFIAS_THUG, 1, DefiasThugOnEnterCombat)
-RegisterCreatureEvent(NPC_DEFIAS_THUG, 2, DefiasThugOnLeaveCombat)
+RegisterCreatureEvent(NPC_DEFIAS_THUG, 1, DefiasThug.OnEnterCombat)
+RegisterCreatureEvent(NPC_DEFIAS_THUG, 2, DefiasThug.OnLeaveCombat)
 
 --[==[
     Thuros Lightfingers - Random Say on Aggro
@@ -67,7 +71,9 @@ RegisterCreatureEvent(NPC_DEFIAS_THUG, 2, DefiasThugOnLeaveCombat)
     Script Complete 100%
 ]==]
 
-NPC_THUROS_LIGHTFINGERS = 61
+local NPC_THUROS_LIGHTFINGERS = 61
+
+local ThurosLightfingers = {}
 
 local NpcThurosLightfingersSay= {
     [1] = "The Brotherhood will not tolerate your actions.",
@@ -75,7 +81,7 @@ local NpcThurosLightfingersSay= {
     [3] = "Feel the power of the Brotherhood!";
 };
 
-local function ThurosLightfingersOnEnterCombat(event, creature, target)
+function ThurosLightfingers.OnEnterCombat(event, creature, target)
     local chance = math.random(1, 3)
 
     if (chance == 1) then
@@ -87,12 +93,12 @@ local function ThurosLightfingersOnEnterCombat(event, creature, target)
     end
 end
 
-local function ThurosLightfingersOnLeaveCombat(event, creature)
+function ThurosLightfingers.OnLeaveCombat(event, creature)
     creature:RemoveEvents()
 end
 
-RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 1, ThurosLightfingersOnEnterCombat)
-RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 2, ThurosLightfingersOnLeaveCombat)
+RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 1, ThurosLightfingers.OnEnterCombat)
+RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 2, ThurosLightfingers.OnLeaveCombat)
 
 --[==[
     Kobold Labourer - Random Say on Aggro
@@ -100,14 +106,16 @@ RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 2, ThurosLightfingersOnLeaveComba
     Script Complete 100%
 ]==]
 
-NPC_KOBOLD_LABOURER = 80
+local NPC_KOBOLD_LABOURER = 80
+
+local KoboldLabourer = {}
 
 local NpcKoboldLabourerSay= {
     [1] = "You no take candle!",
     [2] = "Yiieeeee! Me run!";
 };
 
-local function KoboldLabourerOnEnterCombat(event, creature, target)
+function KoboldLabourer.OnEnterCombat(event, creature, target)
     local chance = math.random(1, 2)
 
     if (chance == 1) then
@@ -117,9 +125,9 @@ local function KoboldLabourerOnEnterCombat(event, creature, target)
     end
 end
 
-local function KoboldLabourerOnLeaveCombat(event, creature)
+function KoboldLabourer.OnLeaveCombat(event, creature)
     creature:RemoveEvents()
 end
 
-RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 1, KoboldLabourerOnEnterCombat)
-RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 2, KoboldLabourerOnLeaveCombat)
+RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 1, KoboldLabourer.OnEnterCombat)
+RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 2, KoboldLabourer.OnLeaveCombat)
