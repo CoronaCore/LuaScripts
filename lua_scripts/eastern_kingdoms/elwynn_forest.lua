@@ -8,18 +8,21 @@ local NPC_KOBOLD_VERMIN = 6
 
 local KoboldVermin = {}
 
-local NpcKoboldVerminSay= {
+local KoboldVerminSay= {
     [1] = "You no take candle!",
     [2] = "Yiieeeee! Me run!";
 };
 
 function KoboldVermin.OnEnterCombat(event, creature, target)
+    local double d = math.random()
     local chance = math.random(1, 2)
 
-    if (chance == 1) then
-        creature:SendUnitSay(NpcKoboldVerminSay[1], 0)
-    elseif (chance == 2) then
-        creature:SendUnitSay(NpcKoboldVerminSay[2], 0)
+    if (d < 0.7) then
+        if (chance == 1) then
+            creature:SendUnitSay(KoboldVerminSay[1], 0)
+        elseif (chance == 2) then
+            creature:SendUnitSay(KoboldVerminSay[2], 0)
+        end
     end
 end
 
@@ -41,21 +44,24 @@ local NPC_DEFIAS_THUG = 38
 
 local DefiasThug = {}
 
-local NpcDefiasThugSay= {
+local DefiasThugSay= {
     [1] = "The Brotherhood will not tolerate your actions.",
     [2] = "Ah, a chance to use this freshly sharpened blade.",
     [3] = "Feel the power of the Brotherhood!";
 };
 
 function DefiasThug.OnEnterCombat(event, creature, target)
+    local double d = math.random()
     local chance = math.random(1, 3)
 
-    if (chance == 1) then
-        creature:SendUnitSay(NpcDefiasThugSay[1], 0)
-    elseif (chance == 2) then
-        creature:SendUnitSay(NpcDefiasThugSay[2], 0)
-    elseif (chance == 3) then
-        creature:SendUnitSay(NpcDefiasThugSay[3], 0)
+    if (d < 0.7) then
+        if (chance == 1) then
+            creature:SendUnitSay(DefiasThugSay[1], 0)
+        elseif (chance == 2) then
+            creature:SendUnitSay(DefiasThugSay[2], 0)
+        elseif (chance == 3) then
+            creature:SendUnitSay(DefiasThugSay[3], 0)
+        end
     end
 end
 
@@ -77,21 +83,24 @@ local NPC_THUROS_LIGHTFINGERS = 61
 
 local ThurosLightfingers = {}
 
-local NpcThurosLightfingersSay= {
+local ThurosLightfingersSay= {
     [1] = "The Brotherhood will not tolerate your actions.",
     [2] = "Ah, a chance to use this freshly sharpened blade.",
     [3] = "Feel the power of the Brotherhood!";
 };
 
 function ThurosLightfingers.OnEnterCombat(event, creature, target)
+    local double d = math.random()
     local chance = math.random(1, 3)
 
-    if (chance == 1) then
-        creature:SendUnitSay(NpcThurosLightfingersSay[1], 0)
-    elseif (chance == 2) then
-        creature:SendUnitSay(NpcThurosLightfingersSay[2], 0)
-    elseif (chance == 3) then
-        creature:SendUnitSay(NpcThurosLightfingersSay[3], 0)
+    if (d < 0.6) then
+        if (chance == 1) then
+            creature:SendUnitSay(ThurosLightfingersSay[1], 0)
+        elseif (chance == 2) then
+            creature:SendUnitSay(ThurosLightfingersSay[2], 0)
+        elseif (chance == 3) then
+            creature:SendUnitSay(ThurosLightfingersSay[3], 0)
+        end
     end
 end
 
@@ -113,18 +122,21 @@ local NPC_KOBOLD_LABOURER = 80
 
 local KoboldLabourer = {}
 
-local NpcKoboldLabourerSay= {
+local KoboldLabourerSay= {
     [1] = "You no take candle!",
     [2] = "Yiieeeee! Me run!";
 };
 
 function KoboldLabourer.OnEnterCombat(event, creature, target)
+    local double d = math.random()
     local chance = math.random(1, 2)
 
-    if (chance == 1) then
-        creature:SendUnitSay(NpcKoboldLabourerSay[1], 0)
-    elseif (chance == 2) then
-        creature:SendUnitSay(NpcKoboldLabourerSay[2], 0)
+    if (d < 0.7) then
+        if (chance == 1) then
+            creature:SendUnitSay(KoboldLabourerSay[1], 0)
+        elseif (chance == 2) then
+            creature:SendUnitSay(KoboldLabourerSay[2], 0)
+        end
     end
 end
 
@@ -135,3 +147,48 @@ end
 RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 1, KoboldLabourer.OnEnterCombat)
 RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 2, KoboldLabourer.Reset)
 RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 4, KoboldLabourer.Reset)
+
+--[==[
+    Riverpaw Runt - Random Say on Aggro
+    Riverpaw Runt - Flee at 15% HP
+    NPC Entry 97
+    Script Complete 100%
+]==]
+
+local NPC_RIVERPAW_RUNT = 97
+
+local RiverpawRunt = {}
+
+local RiverpawRuntSay= {
+    [1] = "More bones to gnaw on...",
+    [2] = "Grrrr... fresh meat!";
+};
+
+function RiverpawRunt.OnEnterCombat(event, creature, target)
+    local double d = math.random()
+    local chance = math.random(1, 2)
+
+    if (d < 0.7) then
+        if (chance == 1) then
+            creature:SendUnitSay(RiverpawRuntSay[1], 0)
+        elseif (chance == 2) then
+            creature:SendUnitSay(RiverpawRuntSay[2], 0)
+        end
+    end
+    creature:RegisterEvent(RiverpawRunt.CheckPhase2, 1000, 0)
+end
+
+function RiverpawRunt.CheckPhase2(event, delay, pCall, creature)
+    if (creature:GetHealthPct() <= 15) then
+        creature:MoveFleeing(creature)
+        creature:RemoveEvents()
+    end
+end
+
+function RiverpawRunt.Reset(event, creature)
+    creature:RemoveEvents()
+end
+
+RegisterCreatureEvent(NPC_RIVERPAW_RUNT, 1, RiverpawRunt.OnEnterCombat)
+RegisterCreatureEvent(NPC_RIVERPAW_RUNT, 2, RiverpawRunt.Reset)
+RegisterCreatureEvent(NPC_RIVERPAW_RUNT, 4, RiverpawRunt.Reset)

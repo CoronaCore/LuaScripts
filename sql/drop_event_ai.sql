@@ -1,6 +1,6 @@
 -- Drop EventAI wehn using same Scripts in lua.
 
-DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (6, 38, 61, 80);
-DELETE FROM `creature_ai_texts` WHERE `entry` IN (-2, -3, -4, -7, -8);
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (6, 38, 61, 80, 97);
+DELETE FROM `creature_ai_texts` WHERE `entry` IN (-2, -3, -4, -5, -6, -7, -8);
 
-UPDATE `creature_template` SET `AIName` = '' WHERE `entry` IN (6, 38, 61, 80)
+UPDATE `creature_template` SET `AIName` = '' WHERE `entry` IN (6, 38, 61, 80, 97)
