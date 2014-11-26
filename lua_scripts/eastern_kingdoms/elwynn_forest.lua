@@ -23,12 +23,13 @@ function KoboldVermin.OnEnterCombat(event, creature, target)
     end
 end
 
-function KoboldVermin.OnLeaveCombat(event, creature)
+function KoboldVermin.Reset(event, creature)
     creature:RemoveEvents()
 end
 
 RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 1, KoboldVermin.OnEnterCombat)
-RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 2, KoboldVermin.OnLeaveCombat)
+RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 2, KoboldVermin.Reset)
+RegisterCreatureEvent(NPC_KOBOLD_VERMIN, 4, KoboldVermin.Reset)
 
 --[==[
     Defias Thug - Random Say on Aggro
@@ -58,12 +59,13 @@ function DefiasThug.OnEnterCombat(event, creature, target)
     end
 end
 
-function DefiasThug.OnLeaveCombat(event, creature)
+function DefiasThug.Reset(event, creature)
     creature:RemoveEvents()
 end
 
 RegisterCreatureEvent(NPC_DEFIAS_THUG, 1, DefiasThug.OnEnterCombat)
-RegisterCreatureEvent(NPC_DEFIAS_THUG, 2, DefiasThug.OnLeaveCombat)
+RegisterCreatureEvent(NPC_DEFIAS_THUG, 2, DefiasThug.Reset)
+RegisterCreatureEvent(NPC_DEFIAS_THUG, 4, DefiasThug.Reset)
 
 --[==[
     Thuros Lightfingers - Random Say on Aggro
@@ -93,12 +95,13 @@ function ThurosLightfingers.OnEnterCombat(event, creature, target)
     end
 end
 
-function ThurosLightfingers.OnLeaveCombat(event, creature)
+function ThurosLightfingers.Reset(event, creature)
     creature:RemoveEvents()
 end
 
 RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 1, ThurosLightfingers.OnEnterCombat)
-RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 2, ThurosLightfingers.OnLeaveCombat)
+RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 2, ThurosLightfingers.Reset)
+RegisterCreatureEvent(NPC_THUROS_LIGHTFINGERS, 4, ThurosLightfingers.Reset)
 
 --[==[
     Kobold Labourer - Random Say on Aggro
@@ -125,9 +128,10 @@ function KoboldLabourer.OnEnterCombat(event, creature, target)
     end
 end
 
-function KoboldLabourer.OnLeaveCombat(event, creature)
+function KoboldLabourer.Reset(event, creature)
     creature:RemoveEvents()
 end
 
 RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 1, KoboldLabourer.OnEnterCombat)
-RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 2, KoboldLabourer.OnLeaveCombat)
+RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 2, KoboldLabourer.Reset)
+RegisterCreatureEvent(NPC_KOBOLD_LABOURER, 4, KoboldLabourer.Reset)
