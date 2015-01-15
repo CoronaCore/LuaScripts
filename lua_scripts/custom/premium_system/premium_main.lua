@@ -11,9 +11,9 @@ local PremiumMenuCommand = "#premium menu"
 
 -- Rules Texts
 PremiumSystem.Texts = {
-    [0] = "TEXT TEXT TEXT TEXT TEXT TEXT  TEXT TEXT TEXT TEXT  TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT",
     [1] = "TEXT TEXT TEXT TEXT TEXT TEXT  TEXT TEXT TEXT TEXT  TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT",
     [2] = "TEXT TEXT TEXT TEXT TEXT TEXT  TEXT TEXT TEXT TEXT  TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT",
+    [3] = "TEXT TEXT TEXT TEXT TEXT TEXT  TEXT TEXT TEXT TEXT  TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT",
 };
 
 -- ItemLink, ItemEntry, ItemCount, CoinsCost
@@ -72,7 +72,7 @@ function PremiumSystem.OnGossipSelect(event, player, _, sender, intid, code)
     elseif (intid == 2) then                 -- Go back to main menu
         PremiumSystem.OnGossipHello(event, player)
     elseif (intid == 3) then                 -- Show Server Info Site
-        player:GossipSetText(string.format("%s\n\n%s\n\n%s", PremiumSystem.Texts[0], PremiumSystem.Texts[1], PremiumSystem.Texts[2]))
+        player:GossipSetText(string.format("%s\n\n%s\n\n%s", PremiumSystem.Texts[1], PremiumSystem.Texts[2], PremiumSystem.Texts[3]))
         player:GossipMenuAddItem(0, "Back", 0, 2)
         player:GossipSendMenu(0x7FFFFFFF, player, 100)
     elseif (intid == 4) then                 -- Show Buy with Coins Site
