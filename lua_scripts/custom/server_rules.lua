@@ -99,6 +99,7 @@ function RulesSystem.OnGossipSelect(event, player, _, sender, intid, code)
         player:RemoveAura(RulesSystem.Settings.Spell)                      -- Remove Aura
         RulesPlayer:SetInActive()                                          -- Set Rules Active = false
         player:SendBroadcastMessage(string.format("%s Thanks %s for accept the rules!", RulesSystemName, PlayerName))
+        player:PlaySoundToPlayer(888)
         player:GossipComplete()                                            -- Close the Gossip
     end
 end
