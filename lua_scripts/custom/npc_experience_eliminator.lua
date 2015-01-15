@@ -3,7 +3,7 @@
 ]==]
 
 -- Include sc_default
-require "lua_scripts/base/sc_default"
+require "base/sc_default"
 
 local NpcId =
 local MoneyCount = 100000

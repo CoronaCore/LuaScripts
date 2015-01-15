@@ -1,5 +1,5 @@
 -- Include sc_default
-require "lua_scripts/base/sc_default"
+require "base/sc_default"
 
 local file = io.open("lua_scripts/ChatLog.log", "a")
 

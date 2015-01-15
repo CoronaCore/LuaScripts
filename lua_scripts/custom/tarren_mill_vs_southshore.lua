@@ -9,7 +9,7 @@
 ]==]
 
 -- Include sc_default
-require "lua_scripts/base/sc_default"
+require "base/sc_default"
 
 local QueueSystem= {
     ["BattleZone"] = {"|CFFFF0303Tarren Mill vs. Southshore|r", 0, 267},

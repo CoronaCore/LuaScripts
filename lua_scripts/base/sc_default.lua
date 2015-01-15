@@ -17,7 +17,7 @@ function Player:SetLuaCooldown(seconds, opt_id)
         cooldowns[guid] = { [source] = {}; };
     end
 
-    cooldowns[guid][source][opt_id] = os.clock() + seconds;
+    cooldowns[guid][source][opt_id] = os.time() + seconds;
 end
  
 function Player:GetLuaCooldown(opt_id)
@@ -30,11 +30,11 @@ function Player:GetLuaCooldown(opt_id)
     end
 
     local cd = cooldowns[guid][source][opt_id];
-    if (not cd or cd < os.clock()) then
+    if (not cd or cd < os.time()) then
         cooldowns[guid][source][opt_id] = 0
         return 0;
     else
-        return cooldowns[guid][source][opt_id] - os.clock();
+        return cooldowns[guid][source][opt_id] - os.time();
     end
 end
 

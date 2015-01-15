@@ -1,7 +1,6 @@
 --[[
 4.0
-Transmogrification TBC - Gossip Menu
-By Rochet2
+Transmogrification TBC - Gossip Menu By Rochet2 Updatet by Salja
 
 Eluna version
 
@@ -24,7 +23,7 @@ Test on cata : implement UI xD?
 Item link icon to Are You sure text
 ]]
 
-local NPC_Entry =
+local NPC_Entry = 60000
 
 local RequireGold = 1
 local GoldModifier = 1.0
@@ -181,7 +180,7 @@ local function DeleteFakeEntry(item)
     if (not GetFakeEntry(item)) then
         return false
     end
-    item:GetOwner():UpdateUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 16), item:GetEntry())
+    item:GetOwner():SetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 16), item:GetEntry())
     DeleteFakeFromDB(item:GetGUIDLow())
     return true
 end
@@ -191,7 +190,7 @@ local function SetFakeEntry(item, entry)
     if(player) then
         local pGUID = player:GetGUIDLow()
         local iGUID = item:GetGUIDLow()
-        player:UpdateUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 16), entry)
+        player:SetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 16), entry)
         if(not entryMap[pGUID]) then
             entryMap[pGUID] = {}
         end
@@ -303,12 +302,12 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
                     if (SuitableForTransmogrification(player, oldItem, newItem)) then
                         if (not _items[lowGUID][display]) then
                             limit = limit + 1
-                            _items[lowGUID][display] = newItem
+                            _items[lowGUID][display] = {newItem:GetBagSlot(), newItem:GetSlot()}
                             local popup = LocText(4, player).."\n\n"..newItem:GetItemLink(player:GetDbcLocale()).."\n"
                             if(RequireToken) then
                                 popup = popup.."\n"..TokenAmount.." x "..GetItemLink(TokenEntry, player:GetDbcLocale())
                             end
-                            player:GossipMenuAddItem(4, newItem:GetItemLink(player:GetDbcLocale()), uiAction, display, false, popup)
+                            player:GossipMenuAddItem(4, newItem:GetItemLink(player:GetDbcLocale()), uiAction, display, false, popup, price)
                         end
                     end
                 end
@@ -327,8 +326,8 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
                             if (SuitableForTransmogrification(player, oldItem, newItem)) then
                                 if (not _items[lowGUID][display]) then
                                     limit = limit + 1
-                                    _items[lowGUID][display] = newItem
-                                    player:GossipMenuAddItem(4, newItem:GetItemLink(player:GetDbcLocale()), uiAction, display, false, popup)
+                                    _items[lowGUID][display] = {newItem:GetBagSlot(), newItem:GetSlot()}
+                                    player:GossipMenuAddItem(4, newItem:GetItemLink(player:GetDbcLocale()), uiAction, display, false, popup, price)
                                 end
                             end
                         end
@@ -356,7 +355,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
         end
         if (removed) then
             player:SendAreaTriggerMessage(LocText(8, player))
-            -- player:PlayDirectSound(3337)
+            player:PlayDirectSound(3337)
         else
             player:SendNotification(LocText(9, player))
         end
@@ -366,7 +365,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
         if (newItem) then
             if (DeleteFakeEntry(newItem)) then
                 player:SendAreaTriggerMessage(LocText(10, player):format(GetSlotName(uiAction, player:GetDbcLocale())))
-                -- player:PlayDirectSound(3337)
+                player:PlayDirectSound(3337)
             else
                 player:SendNotification(LocText(11, player):format(GetSlotName(uiAction, player:GetDbcLocale())))
             end
@@ -378,7 +377,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
             local oldItem = player:GetItemByPos(INVENTORY_SLOT_BAG_0, sender)
             if (oldItem) then
                 if (_items[lowGUID] and _items[lowGUID][uiAction] and _items[lowGUID][uiAction]) then
-                    local newItem = _items[lowGUID][uiAction]
+                    local newItem = player:GetItemByPos(_items[lowGUID][uiAction][1], _items[lowGUID][uiAction][2])
                     if (newItem:GetOwnerGUID() == player:GetGUID() and (newItem:IsInBag() or newItem:GetBagSlot() == INVENTORY_SLOT_BAG_0) and SuitableForTransmogrification(player, oldItem, newItem)) then
                         local price
                         if(RequireGold == 1) then
@@ -393,7 +392,7 @@ local function OnGossipSelect(event, player, creature, sender, uiAction)
                         SetFakeEntry(oldItem, newItem:GetEntry())
                         -- newItem:SetNotRefundable(player)
                         newItem:SetBinding(true)
-                        -- player:PlayDirectSound(3337)
+                        player:PlayDirectSound(3337)
                         player:SendAreaTriggerMessage(LocText(12, player):format(GetSlotName(sender, player:GetDbcLocale())))
                     else
                         player:SendNotification(LocText(13, player))
@@ -436,7 +435,7 @@ local function OnLogin(event, player)
             if (item) then
                 if(entryMap[playerGUID]) then
                     if(entryMap[playerGUID][item:GetGUIDLow()]) then
-                        player:UpdateUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 16), entryMap[playerGUID][item:GetGUIDLow()])
+                        player:SetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (item:GetSlot() * 16), entryMap[playerGUID][item:GetGUIDLow()])
                     end
                 end
             end
@@ -465,10 +464,10 @@ end
 -- Note, Query is instant when Execute is delayed
 CharDBQuery([[
 CREATE TABLE IF NOT EXISTS `custom_transmogrification` (
-	`GUID` INT(10) UNSIGNED NOT NULL COMMENT 'Item guidLow',
-	`FakeEntry` INT(10) UNSIGNED NOT NULL COMMENT 'Item entry',
-	`Owner` INT(10) UNSIGNED NOT NULL COMMENT 'Player guidLow',
-	PRIMARY KEY (`GUID`)
+    `GUID` INT(10) UNSIGNED NOT NULL COMMENT 'Item guidLow',
+    `FakeEntry` INT(10) UNSIGNED NOT NULL COMMENT 'Item entry',
+    `Owner` INT(10) UNSIGNED NOT NULL COMMENT 'Player guidLow',
+    PRIMARY KEY (`GUID`)
 )
 COMMENT='version 4.0'
 COLLATE='latin1_swedish_ci'
