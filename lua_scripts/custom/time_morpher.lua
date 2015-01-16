@@ -76,9 +76,7 @@ function TimeMorph.CooldownCheck(event, delay, repeats, player)
         player:RemoveEvents()
         player:SendBroadcastMessage(string.format("%s You DeMorph", TimeMorphName))
     elseif player:GetLuaCooldown(3) <= 10 then
-        for _, v in pairs(GetPlayersInWorld()) do
-            player:SendBroadcastMessage(string.format("%s You will DeMorph in %s seconds!", TimeMorphName, player:GetLuaCooldown(3)))
-        end
+        player:SendBroadcastMessage(string.format("%s You will DeMorph in %s seconds!", TimeMorphName, player:GetLuaCooldown(3)))
     end
 end
 

@@ -109,11 +109,9 @@ function RulesSystem.CooldownCheck(event, delay, repeats, player)
     local PlayerName = player:GetName()
 
     if player:GetLuaCooldown(2) > 0 then
-        for _, v in pairs(GetPlayersInWorld()) do
-            player:GossipClearMenu()
-            player:GossipMenuAddItem(4, "", 0, 1, false, string.format("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n|cffff0000You can accept in |CFFFFFF01%s|r |cffff0000seconds|r\n\n", RulesSystem.Texts[0], RulesSystem.Texts[1], RulesSystem.Texts[2], RulesSystem.Texts[3], RulesSystem.Texts[4], RulesSystem.Texts[5], math.ceil(player:GetLuaCooldown(2))))
-            player:GossipSendMenu(0x7FFFFFFF, player, 200)
-        end
+        player:GossipClearMenu()
+        player:GossipMenuAddItem(4, "", 0, 1, false, string.format("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n|cffff0000You can accept in |CFFFFFF01%s|r |cffff0000seconds|r\n\n", RulesSystem.Texts[0], RulesSystem.Texts[1], RulesSystem.Texts[2], RulesSystem.Texts[3], RulesSystem.Texts[4], RulesSystem.Texts[5], math.ceil(player:GetLuaCooldown(2))))
+        player:GossipSendMenu(0x7FFFFFFF, player, 200)
     else
         RulesSystem.OnGossipHello(event, player)
         player:PlaySoundToPlayer(1150)

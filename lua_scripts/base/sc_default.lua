@@ -22,7 +22,7 @@ end
 
 function Player:GetLuaCooldown(opt_id)
     assert(type(self) == "userdata");
-    local guid, source = self:GetGUIDLow();
+    local guid = self:GetGUIDLow();
     opt_id = opt_id or 1;
 
     if (not cooldowns[guid]) then
