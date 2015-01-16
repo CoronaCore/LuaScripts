@@ -80,8 +80,8 @@ function RulesSystem.OnLogin(event, player)
         player:AddAura(RulesSystem.Settings.Spell, player)                -- AddAura frozen to Player
         player:PlaySoundToPlayer(1509)
         player:SendBroadcastMessage(string.format("%s Welcome %s read the rules and accept it you can use #rules for show rules again!", RulesSystemName, PlayerName, RulesCommand))
-        player:SetLuaCooldown(RulesSystem.Settings.Cooldown)
-        player:RegisterEvent(RulesSystem.CooldownCheck, 1000, player:GetLuaCooldown())
+        player:SetLuaCooldown(RulesSystem.Settings.Cooldown, 2)
+        player:RegisterEvent(RulesSystem.CooldownCheck, 1000, player:GetLuaCooldown(2))
     end
 end
 
@@ -95,7 +95,7 @@ function RulesSystem.OnGossipSelect(event, player, _, sender, intid, code)
     local RulesPlayer = RulesSystem(player)
     local PlayerName = player:GetName()
 
-    if (intid == 1) and player:GetLuaCooldown() == 0 then
+    if (intid == 1) and player:GetLuaCooldown(2) == 0 then
         player:RemoveAura(RulesSystem.Settings.Spell)                      -- Remove Aura
         RulesPlayer:SetInActive()                                          -- Set Rules Active = false
         player:SendBroadcastMessage(string.format("%s Thanks %s for accept the rules!", RulesSystemName, PlayerName))
@@ -108,10 +108,10 @@ function RulesSystem.CooldownCheck(event, delay, repeats, player)
     local RulesPlayer = RulesSystem(player)
     local PlayerName = player:GetName()
 
-    if player:GetLuaCooldown() > 0 then
+    if player:GetLuaCooldown(2) > 0 then
         for _, v in pairs(GetPlayersInWorld()) do
             player:GossipClearMenu()
-            player:GossipMenuAddItem(4, "", 0, 1, false, string.format("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n|cffff0000You can accept in |CFFFFFF01%s|r |cffff0000seconds|r\n\n", RulesSystem.Texts[0], RulesSystem.Texts[1], RulesSystem.Texts[2], RulesSystem.Texts[3], RulesSystem.Texts[4], RulesSystem.Texts[5], math.ceil(player:GetLuaCooldown())))
+            player:GossipMenuAddItem(4, "", 0, 1, false, string.format("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n|cffff0000You can accept in |CFFFFFF01%s|r |cffff0000seconds|r\n\n", RulesSystem.Texts[0], RulesSystem.Texts[1], RulesSystem.Texts[2], RulesSystem.Texts[3], RulesSystem.Texts[4], RulesSystem.Texts[5], math.ceil(player:GetLuaCooldown(2))))
             player:GossipSendMenu(0x7FFFFFFF, player, 200)
         end
     else

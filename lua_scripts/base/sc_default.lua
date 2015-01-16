@@ -11,30 +11,30 @@ function Player:SetLuaCooldown(seconds, opt_id)
     assert(type(self) == "userdata");
     seconds = assert(tonumber(seconds));
     opt_id = opt_id or 1;
-    local guid, source = self:GetGUIDLow(), debug.getinfo(2, 'S').short_src;
+    local guid = self:GetGUIDLow();
 
     if (not cooldowns[guid]) then
-        cooldowns[guid] = { [source] = {}; };
+        cooldowns[guid] = {};
     end
 
-    cooldowns[guid][source][opt_id] = os.time() + seconds;
+    cooldowns[guid][opt_id] = os.time() + seconds;
 end
- 
+
 function Player:GetLuaCooldown(opt_id)
     assert(type(self) == "userdata");
-    local guid, source = self:GetGUIDLow(), debug.getinfo(2, 'S').short_src;
+    local guid, source = self:GetGUIDLow();
     opt_id = opt_id or 1;
 
     if (not cooldowns[guid]) then
-        cooldowns[guid] = { [source] = {}; };
+        cooldowns[guid] = {};
     end
 
-    local cd = cooldowns[guid][source][opt_id];
+    local cd = cooldowns[guid][opt_id];
     if (not cd or cd < os.time()) then
-        cooldowns[guid][source][opt_id] = 0
+        cooldowns[guid][opt_id] = 0
         return 0;
     else
-        return cooldowns[guid][source][opt_id] - os.time();
+        return cooldowns[guid][opt_id] - os.time();
     end
 end
 
