@@ -12,8 +12,7 @@ ZoneCheck.Settings = {
 
 -- AreaId, ZoneId, MapId
 ZoneCheck.ZonesAreas = {
-    [1] = { 876, 876, 1},
-    [2] = { 1519, 1519, 0 },
+    [1] = { 876, 876, 1}, -- GM Island
 };
 
 function ZoneCheck.OnEnterZone(event, player, newZone, newArea)
