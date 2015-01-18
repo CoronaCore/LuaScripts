@@ -85,6 +85,6 @@ function PremiumSystem:SetAccount()
 end
 
 function PremiumSystem:DeleteAccount(player)
-    CharDBQuery("DELETE FROM character_rules WHERE guid = "..player)
+    AuthDBQuery("DELETE FROM character_rules WHERE guid = "..player)
 end
 
