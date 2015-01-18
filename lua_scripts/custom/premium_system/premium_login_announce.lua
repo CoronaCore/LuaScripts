@@ -12,9 +12,9 @@ function PremiumSystem.OnLogin(event, player)  -- Send a welcome massage to play
     local PlayerName = player:GetName()
 
     if PremiumActive then
-        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Welcome %s you are Premium!|r", PremiumSystemName, PlayerName))
+        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Welcome %s you are Premium!|r", PremiumSystem.Settings.SystemName, PlayerName))
     else
-        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Welcome %s you are NOT Premium!|r", PremiumSystemName, PlayerName))
+        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Welcome %s you are NOT Premium!|r", PremiumSystem.Settings.SystemName, PlayerName))
     end
 end
 

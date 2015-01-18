@@ -2,13 +2,16 @@
 -- Premium methods by Daniel S. Reichenbach
 --
 
--- Define the Premium System Name
-PremiumSystemVersion = 1.0
-PremiumSystemName = "|CFFE55BB0[Premium System]|r"
-PremiumItemEntry = 60000
-
 PremiumSystem = {}
 PremiumSystem.__index = PremiumSystem
+
+-- DPremium System Settings
+PremiumSystem.Settings = {
+    Version = "1.1",
+    SystemName = "|CFFE55BB0[Premium System]|r",
+    ItemEntry = 60000,
+    ItemEnable = false,
+};
 
 setmetatable(PremiumSystem, {
   __call = function (cls, ...)
@@ -52,7 +55,7 @@ function PremiumSystem:GetRank()
 end
 
 function PremiumSystem:ModifyCoins(value)
-    if value then
+    if value ~= nil then
         AuthDBQuery("UPDATE account_premium SET coins = coins + "..value.." WHERE id = "..self.AccountId)
     end
 end
@@ -72,3 +75,4 @@ end
 function PremiumSystem:IsActive()
     return self.PremiumState
 end
+

@@ -24,7 +24,6 @@ PremiumSystem.Items = {
     [4] = { GetItemLink(33225), 33225, 1, 100 }, -- Reins of the Swift Spectral Tiger
 };
 
-
 function PremiumSystem.MenuCommand(event, player, msg, _, lang)
     local PremiumPlayer = PremiumSystem(player)
     local PremiumActive = PremiumPlayer:IsActive() == true
@@ -88,11 +87,11 @@ function PremiumSystem.OnGossipSelect(event, player, _, sender, intid, code)
         player:SendAuctionMenu(player)
     elseif (intid == 7) then                 -- Resets Player Talents
         player:ResetTalents()
-        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Talents Resetet |r", PremiumSystemName))
+        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Talents Resetet |r", PremiumSystem.Settings.SystemName))
         player:GossipComplete()
     elseif (intid == 8) then                 -- Resets Player Talents
         player:DurabilityRepairAll()
-        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E All Items Repaired |r", PremiumSystemName))
+        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E All Items Repaired |r", PremiumSystem.Settings.SystemName))
         player:GossipComplete()
     end
 
@@ -100,18 +99,26 @@ function PremiumSystem.OnGossipSelect(event, player, _, sender, intid, code)
         local ItemLink, ItemEntry, ItemCount, Coins = table.unpack(PremiumSystem.Items[sender])
 
         if PremiumCoins < Coins then
-            player:SendBroadcastMessage(string.format("%s|CFFFE8A0E You need %s Coins for %sx %s|r", PremiumSystemName, Coins, ItemCount, ItemLink))
+            player:SendBroadcastMessage(string.format("%s|CFFFE8A0E You need %s Coins for %sx %s|r", PremiumSystem.Settings.SystemName, Coins, ItemCount, ItemLink))
             player:GossipComplete()
         else
             player:AddItem(ItemEntry, ItemCount)
             PremiumPlayer:ModifyCoins(-Coins)
-            player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Create %sx|r %s", PremiumSystemName, ItemCount, ItemLink))
+            player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Create %sx|r %s", PremiumSystem.Settings.SystemName, ItemCount, ItemLink))
             player:GossipComplete()
         end
     end
 end
 
-RegisterPlayerEvent(18, PremiumSystem.MenuCommand)                          -- Register Event on Chat Command use
-RegisterPlayerGossipEvent(100, 2, PremiumSystem.OnGossipSelect)             -- Register Event for Gossip Select
-RegisterItemGossipEvent(PremiumItemEntry, 1, PremiumSystem.OnGossipHello)   -- Register Gossip Event on Item Use
-RegisterItemGossipEvent(PremiumItemEntry, 2, PremiumSystem.OnGossipSelect)  -- Register Gossip Event on Item Use Select
+RegisterPlayerEvent(18, PremiumSystem.MenuCommand)                                              -- Register Event on Chat Command use
+RegisterPlayerGossipEvent(100, 2, PremiumSystem.OnGossipSelect)                                 -- Register Event for Gossip Select
+
+if PremiumSystem.Settings.ItenEnable == true then
+    RegisterItemGossipEvent(PremiumSystem.Settings.ItemEntry, 1, PremiumSystem.OnGossipHello)   -- Register Gossip Event on Item Use
+    RegisterItemGossipEvent(PremiumSystem.Settings.ItemEntry, 2, PremiumSystem.OnGossipSelect)  -- Register Gossip Event on Item Use Select
+else
+   print("----------------------------------------------")
+   print("      PremiumSystem Item Support Disabled     ")
+   print("               Script by Salja                ")
+   print("----------------------------------------------")
+end

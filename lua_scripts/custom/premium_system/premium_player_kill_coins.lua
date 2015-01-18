@@ -14,7 +14,7 @@ function PremiumSystem.OnPlayerKill(event, killer, killed)
 
     if PremiumActive then
         PremiumPlayer:ModifyCoins(CoinsCount)
-        killer:SendBroadcastMessage(string.format("%s|CFFFE8A0E %s Bonus Coin|r", PremiumSystemName, CoinsCount))
+        killer:SendBroadcastMessage(string.format("%s|CFFFE8A0E %s Bonus Coin|r", PremiumSystem.Settings.SystemName, CoinsCount))
     end
 end
 

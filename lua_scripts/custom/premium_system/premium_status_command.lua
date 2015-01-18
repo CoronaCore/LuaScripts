@@ -16,9 +16,9 @@ function PremiumSystem.StatusCommand(event, player, msg, _, lang)
     local PlayerName = player:GetName()
 
     if (msg == PremiumStatusCommand) and PremiumActive then -- Use "#premium status" for show your premium status
-        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E %s your premium rank is %s|r", PremiumSystemName, PlayerName, PremiumRank))
-        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Premium will expire on %s|r", PremiumSystemName, PremiumExpireDate))
-        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E You have %s Coins|r", PremiumSystemName, PremiumCoins))
+        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E %s your premium rank is %s|r", PremiumSystem.Settings.SystemName, PlayerName, PremiumRank))
+        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Premium will expire on %s|r", PremiumSystem.Settings.SystemName, PremiumExpireDate))
+        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E You have %s Coins|r", PremiumSystem.Settings.SystemName, PremiumCoins))
         return false;
     end
 end
