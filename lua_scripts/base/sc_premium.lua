@@ -29,25 +29,25 @@ function PremiumSystem.new(player)
         -- query premium settings
         local PlayerPremiumStatus = AuthDBQuery("SELECT * FROM account_premium WHERE id = "..self.AccountId)
         if (PlayerPremiumStatus ~= nil) then
+            self.Id             = PlayerPremiumStatus:GetInt8(0)
             self.Rank           = PlayerPremiumStatus:GetInt8(1)
             self.Coins          = PlayerPremiumStatus:GetInt32(2)
-            self.StartDate      = PlayerPremiumStatus:GetString(3)
-            self.ExpireDate     = PlayerPremiumStatus:GetString(4)
-            self.PremiumState   = PlayerPremiumStatus:GetBool(5)
+            self.ExpireDate     = PlayerPremiumStatus:GetString(3)
+            self.PremiumState   = PlayerPremiumStatus:GetBool(4)
         else
             -- no premium settings found, set defaults
+            self.Id             = nil
             self.Rank           = 0
             self.Coins          = 0
-            self.StartDate      = nil
-            self.ExpireDat      = nil
+            self.ExpireDate     = nil
             self.PremiumState   = false
         end
     end
     return self
 end
 
-function PremiumSystem:GetAccountId()
-    return self.AccountId
+function PremiumSystem:GetAcciuntId()
+    return self.Id
 end
 
 function PremiumSystem:GetRank()
@@ -64,15 +64,27 @@ function PremiumSystem:GetCoins()
     return self.Coins
 end
 
-function PremiumSystem:GetStartDate()
-    return self.StartDate
-end
-
 function PremiumSystem:GeExpireDate()
     return self.ExpireDate
 end
 
 function PremiumSystem:IsActive()
     return self.PremiumState
+end
+
+function PremiumSystem:CheckExpireDate()
+    local ts = os.time()
+    if (os.date('%Y-%m-%d %H:%M:%S', ts) > self.ExpireDate) then
+        AuthDBQuery("UPDATE account_premium SET active = 0 WHERE id = "..self.AccountId)
+        return true
+    end
+end
+
+function PremiumSystem:SetAccount()
+    AuthDBQuery(string.format("INSERT INTO account_premium (`id`) VALUES (%s)", self.AccountId))
+end
+
+function PremiumSystem:DeleteAccount(player)
+    CharDBQuery("DELETE FROM character_rules WHERE guid = "..player)
 end
 

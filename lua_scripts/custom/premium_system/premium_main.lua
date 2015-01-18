@@ -34,6 +34,30 @@ function PremiumSystem.MenuCommand(event, player, msg, _, lang)
     end
 end
 
+function PremiumSystem.OnLoginCheckExpireDate(event, player)             -- Check Premium
+    local PremiumPlayer = PremiumSystem(player)
+    local PremiumActive = PremiumPlayer:IsActive() == true
+    local PremiumCheckExpireDate = PremiumPlayer:CheckExpireDate() == true
+
+    if PremiumActive then
+        if PremiumCheckExpireDate then
+            player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Your Premium time is over|r", PremiumSystem.Settings.SystemName))
+        end
+    end
+end
+
+function PremiumSystem.OnCharCreate(event, player)
+    local PremiumPlayer = PremiumSystem(player)
+    local PremiumAccount = PremiumPlayer:GetAcciuntId()
+
+    if PremiumAccount == nil then
+        PremiumPlayer:SetAccount()                                        -- Insert id into account_premium on new character create
+    end
+end
+
+function PremiumSystem.OnCharDelete(event, player)
+    PremiumSystem:DeleteAccount(player)                                   -- Delete guid from character_rules on character delete
+end
 
 function PremiumSystem.OnGossipHello(event, player)
     local PremiumPlayer = PremiumSystem(player)
@@ -87,11 +111,11 @@ function PremiumSystem.OnGossipSelect(event, player, _, sender, intid, code)
         player:SendAuctionMenu(player)
     elseif (intid == 7) then                 -- Resets Player Talents
         player:ResetTalents()
-        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Talents Resetet |r", PremiumSystem.Settings.SystemName))
+        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Talents Resetet|r", PremiumSystem.Settings.SystemName))
         player:GossipComplete()
     elseif (intid == 8) then                 -- Resets Player Talents
         player:DurabilityRepairAll()
-        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E All Items Repaired |r", PremiumSystem.Settings.SystemName))
+        player:SendBroadcastMessage(string.format("%s|CFFFE8A0E All Items Repaired|r", PremiumSystem.Settings.SystemName))
         player:GossipComplete()
     end
 
@@ -110,9 +134,6 @@ function PremiumSystem.OnGossipSelect(event, player, _, sender, intid, code)
     end
 end
 
-RegisterPlayerEvent(18, PremiumSystem.MenuCommand)                                              -- Register Event on Chat Command use
-RegisterPlayerGossipEvent(100, 2, PremiumSystem.OnGossipSelect)                                 -- Register Event for Gossip Select
-
 if PremiumSystem.Settings.ItenEnable == true then
     RegisterItemGossipEvent(PremiumSystem.Settings.ItemEntry, 1, PremiumSystem.OnGossipHello)   -- Register Gossip Event on Item Use
     RegisterItemGossipEvent(PremiumSystem.Settings.ItemEntry, 2, PremiumSystem.OnGossipSelect)  -- Register Gossip Event on Item Use Select
@@ -122,3 +143,9 @@ else
    print("               Script by Salja                ")
    print("----------------------------------------------")
 end
+
+RegisterPlayerEvent(18, PremiumSystem.MenuCommand)                                              -- Register Event On Chat Command
+RegisterPlayerGossipEvent(100, 2, PremiumSystem.OnGossipSelect)                                 -- Register Event On Gossip Select
+RegisterPlayerEvent(3, PremiumSystem.OnLoginCheckExpireDate)                                    -- Register Event On Login
+RegisterPlayerEvent(1, PremiumSystem.OnCharCreate)                                              -- Register Evenet On Character Create
+RegisterPlayerEvent(2, PremiumSystem.OnCharDelete)                                              -- Register Evenet On Character Create
