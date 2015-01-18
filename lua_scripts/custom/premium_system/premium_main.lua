@@ -48,8 +48,7 @@ end
 
 function PremiumSystem.OnCharCreate(event, player)
     local PremiumPlayer = PremiumSystem(player)
-    local PremiumAccount = PremiumPlayer:GetAcciuntId()
-
+    local PremiumAccount = PremiumPlayer:GetAccountId()
     if PremiumAccount == nil then
         PremiumPlayer:SetAccount()                                        -- Insert id into account_premium on new character create
     end
