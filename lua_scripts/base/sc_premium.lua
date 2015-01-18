@@ -46,7 +46,7 @@ function PremiumSystem.new(player)
     return self
 end
 
-function PremiumSystem:GetAcciuntId()
+function PremiumSystem:GetAccountId()
     return self.Id
 end
 
