@@ -54,10 +54,6 @@ function PremiumSystem.OnCharCreate(event, player)
     end
 end
 
-function PremiumSystem.OnCharDelete(event, player)
-    PremiumSystem:DeleteAccount(player)                                   -- Delete guid from character_rules on character delete
-end
-
 function PremiumSystem.OnGossipHello(event, player)
     local PremiumPlayer = PremiumSystem(player)
     local PremiumActive = PremiumPlayer:IsActive() == true
@@ -147,4 +143,3 @@ RegisterPlayerEvent(18, PremiumSystem.MenuCommand)                              
 RegisterPlayerGossipEvent(100, 2, PremiumSystem.OnGossipSelect)                                 -- Register Event On Gossip Select
 RegisterPlayerEvent(3, PremiumSystem.OnLoginCheckExpireDate)                                    -- Register Event On Login
 RegisterPlayerEvent(1, PremiumSystem.OnCharCreate)                                              -- Register Evenet On Character Create
-RegisterPlayerEvent(2, PremiumSystem.OnCharDelete)                                              -- Register Evenet On Character Create

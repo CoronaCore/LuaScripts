@@ -83,8 +83,3 @@ end
 function PremiumSystem:SetAccount()
     AuthDBQuery(string.format("INSERT INTO account_premium (`id`) VALUES (%s)", self.AccountId))
 end
-
-function PremiumSystem:DeleteAccount(player)
-    AuthDBQuery("DELETE FROM character_rules WHERE guid = "..player)
-end
-
