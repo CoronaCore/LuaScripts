@@ -26,7 +26,7 @@ end
 
 function PremiumSystem.OnCodeGossipHello(event, player, unit)
     player:GossipClearMenu()
-    player:GossipMenuAddItem(0, "Enter the Code!", 1, 1, true, nil)
+    player:GossipMenuAddItem(0, "Enter the Code!", 1, 3000, true, nil)
     player:GossipSetText("Greetings "..player:GetName().."")
     player:GossipSendMenu(0x7FFFFFFF, player, 100)
 end
@@ -37,7 +37,7 @@ function PremiumSystem.OnCodeGossipSelect(event, player, _, sender, intid, code)
     local PlayerGUID = player:GetGUIDLow()
     local PlayerAccount = player:GetAccountId()
 
-    if (intid == 1) then
+    if (intid == 30000) then
         local PremiumCodeCheck = AuthDBQuery(string.format("SELECT * FROM account_premium_codes WHERE code = ('%s') and type = 0 and active = 1", code))
         local PremiumCode = code
 
