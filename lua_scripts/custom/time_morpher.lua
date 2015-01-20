@@ -4,12 +4,12 @@
 -- Include sc_default
 require "base/sc_default"
 
-TimeMorph = {}
+local TimeMorph = {}
 
 TimeMorphName = "|CFF1CB619[Morph System]|r"
 
 TimeMorph.Settings = {
-    NpcActive = true,
+    NpcActive = false,
     NpcEntry = 60000,
     ItemActive = true,
     ItemEntry = 70000,
