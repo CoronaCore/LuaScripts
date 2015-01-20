@@ -1,16 +1,16 @@
 --[==[
     NOTE: need to insert character_rules.sql in your characters database
-          for better work skip the cinematic in your mangosd.conf
 ]==]
 
 -- Include sc_default
 require "base/sc_default"
-require "base/sc_rules"
+
+
+local RulesSystem = {}
 
 -- Rules Settings
 RulesSystem.Settings = {
-    OnLogin = true,
-    OnChat = true,
+    Name = "|cffff0000[Rules System]|r",
     Cooldown = 30,
     Spell = 9454,
 };
@@ -38,14 +38,12 @@ if (RulesSystem.Commands[3]:sub(-1) ~= " ") then
 end
 
 function RulesSystem.OnChat(event, player, msg, _, lang)                -- Use "#rules" for sending rules
-    local RulesPlayer = RulesSystem(player)
-
-    if (msg == RulesSystem.Commands[0]) and RulesSystem.Settings.OnChat == true then
+    if (msg == RulesSystem.Commands[0]) then
         RulesSystem.OnGossipHello(event, player)
         return false;
     elseif (msg == RulesSystem.Commands[1]) and player:IsGM() == true then
-        RulesPlayer:Reset()
-        player:SendBroadcastMessage(string.format("%s Rules updatet pls accept again.", RulesSystemName))
+        CharDBQuery("UPDATE character_rules SET active = 1")
+        player:SendBroadcastMessage(string.format("%s Rules update please accept again!", RulesSystem.Settings.Name))
         return false;
     elseif (msg == RulesSystem.Commands[2]) and player:IsGM() == true then
         for _, p in ipairs(GetPlayersInWorld()) do
@@ -56,30 +54,28 @@ function RulesSystem.OnChat(event, player, msg, _, lang)                -- Use "
         if GetPlayerByName(msg:sub(RulesSystem.Commands[3]:len()+1)) then
             RulesSystem.OnGossipHello(event, GetPlayerByName(msg:sub(RulesSystem.Commands[3]:len()+1)))
         else
-            player:SendBroadcastMessage(string.format("%s No player found with name %s", RulesSystemName, msg:sub(RulesSystem.Commands[3]:len()+1)))
+            player:SendBroadcastMessage(string.format("%s No player found with name %s", RulesSystem.Settings.Name, msg:sub(RulesSystem.Commands[3]:len()+1)))
         end
         return false;
     end
 end
 
-function RulesSystem.OnCharCreate(event, player)
-    local RulesPlayer = RulesSystem(player)
-    RulesPlayer:SetAccount()                                             -- Insert guid into character_rules on new character create
+function RulesSystem.OnCharCreate(event, player)                         -- Insert guid into character_rules on new character create
+    CharDBQuery(string.format("INSERT INTO character_rules (`guid`) VALUES (%s)", player:GetGUIDLow()))
 end
 
-function RulesSystem.OnCharDelete(event, player)
-    RulesSystem:DeleteAccount(player)                                    -- Delete guid from character_rules on character delete
+function RulesSystem.OnCharDelete(event, player)                         -- Delete guid from character_rules on character delete
+    CharDBQuery(string.format("DELETE FROM character_rules WHERE guid = (%s)", player))
 end
 
 function RulesSystem.OnLogin(event, player)
-    local RulesPlayer = RulesSystem(player)
-    local RulesActive = RulesPlayer:IsActive() == true
+    local RulesActive = CharDBQuery(string.format("SELECT * FROM character_rules WHERE active = 1 and guid = (%s)", player:GetGUIDLow()))
     local PlayerName = player:GetName()
 
-    if RulesSystem.Settings.OnLogin == true and RulesActive then          -- Check Rules Active on Login
+    if RulesActive then                                                   -- Check Rules Active on Login
         player:AddAura(RulesSystem.Settings.Spell, player)                -- AddAura frozen to Player
         player:PlaySoundToPlayer(1509)
-        player:SendBroadcastMessage(string.format("%s Welcome %s read the rules and accept it you can use #rules for show rules again!", RulesSystemName, PlayerName, RulesCommand))
+        player:SendBroadcastMessage(string.format("%s Welcome %s please read the rules and accept it, use #rules to watch the rules again!", RulesSystem.Settings.Name, PlayerName, RulesCommand))
         player:SetLuaCooldown(RulesSystem.Settings.Cooldown, 2)
         player:RegisterEvent(RulesSystem.CooldownCheck, 1000, player:GetLuaCooldown(2))
     end
@@ -88,30 +84,28 @@ end
 function RulesSystem.OnGossipHello(event, player)                          -- Show Rules
     player:GossipClearMenu()
     player:GossipMenuAddItem(4, "", 0, 1, false, string.format("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n", RulesSystem.Texts[0], RulesSystem.Texts[1], RulesSystem.Texts[2], RulesSystem.Texts[3], RulesSystem.Texts[4], RulesSystem.Texts[5], RulesSystem.Texts[5]))
-    player:GossipSendMenu(0x7FFFFFFF, player, 200)
+    player:GossipSendMenu(0x7FFFFFFF, player, 100)
 end
  
 function RulesSystem.OnGossipSelect(event, player, _, sender, intid, code)
-    local RulesPlayer = RulesSystem(player)
     local PlayerName = player:GetName()
 
     if (intid == 1) and player:GetLuaCooldown(2) == 0 then
         player:RemoveAura(RulesSystem.Settings.Spell)                      -- Remove Aura
-        RulesPlayer:SetInActive()                                          -- Set Rules Active = false
-        player:SendBroadcastMessage(string.format("%s Thanks %s for accept the rules!", RulesSystemName, PlayerName))
+        CharDBQuery(string.format("UPDATE character_rules SET active = 0 WHERE guid = (%s)", player:GetGUIDLow()))
+        player:SendBroadcastMessage(string.format("%s Thank you %s that they have read the rules and accepted!", RulesSystem.Settings.Name, PlayerName))
         player:PlaySoundToPlayer(888)
         player:GossipComplete()                                            -- Close the Gossip
     end
 end
 
 function RulesSystem.CooldownCheck(event, delay, repeats, player)
-    local RulesPlayer = RulesSystem(player)
     local PlayerName = player:GetName()
 
     if player:GetLuaCooldown(2) > 0 then
         player:GossipClearMenu()
         player:GossipMenuAddItem(4, "", 0, 1, false, string.format("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n|cffff0000You can accept in |CFFFFFF01%s|r |cffff0000seconds|r\n\n", RulesSystem.Texts[0], RulesSystem.Texts[1], RulesSystem.Texts[2], RulesSystem.Texts[3], RulesSystem.Texts[4], RulesSystem.Texts[5], math.ceil(player:GetLuaCooldown(2))))
-        player:GossipSendMenu(0x7FFFFFFF, player, 200)
+        player:GossipSendMenu(0x7FFFFFFF, player, 100)
     else
         RulesSystem.OnGossipHello(event, player)
         player:PlaySoundToPlayer(1150)
@@ -122,5 +116,5 @@ end
 RegisterPlayerEvent(1, RulesSystem.OnCharCreate)                            -- Register Evenet On Character Create
 RegisterPlayerEvent(2, RulesSystem.OnCharDelete)                            -- Register Evenet On Character Create
 RegisterPlayerEvent(3, RulesSystem.OnLogin)                                 -- Register Event On Login
-RegisterPlayerGossipEvent(200, 2, RulesSystem.OnGossipSelect)               -- Register Event for Gossip Select
+RegisterPlayerGossipEvent(100, 2, RulesSystem.OnGossipSelect)               -- Register Event for Gossip Select
 RegisterPlayerEvent(18, RulesSystem.OnChat)                                 -- Register Evenet on Chat Command use

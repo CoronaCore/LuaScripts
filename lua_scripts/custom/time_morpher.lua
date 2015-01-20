@@ -6,9 +6,8 @@ require "base/sc_default"
 
 local TimeMorph = {}
 
-TimeMorphName = "|CFF1CB619[Morph System]|r"
-
 TimeMorph.Settings = {
+    Name = "|CFF1CB619[Morph System]|r",
     NpcActive = false,
     NpcEntry = 60000,
     ItemActive = true,
@@ -31,12 +30,12 @@ TimeMorph.Displays = {
 
 function TimeMorph.OnGossipHello(event, player, unit)
     if player:GetLuaCooldown(3) == 0 then
-        player:GossipSetText(string.format("Welcome %s in %s\n\nYou will Morph for |CFFFF0000%s|r sconds", player:GetName(), TimeMorphName, TimeMorph.Settings.MorphTime))
+        player:GossipSetText(string.format("Welcome %s in %s\n\nYou will Morph for |CFFFF0000%s|r sconds", player:GetName(), TimeMorph.Settings.Name, TimeMorph.Settings.MorphTime))
         for i, v in ipairs(TimeMorph.Displays) do
             player:GossipMenuAddItem(0, ""..v[1]..""..v[2].."", i, 1)
         end
     else
-        player:GossipSetText(string.format("Welcome %s in %s\n\nYou are Morphed you must DeMorph befor you can add a new Morph", player:GetName(), TimeMorphName))
+        player:GossipSetText(string.format("Welcome %s in %s\n\nYou are Morphed you must DeMorph befor you can add a new Morph", player:GetName(), TimeMorph.Settings.Name))
         player:GossipMenuAddItem(0, "|TInterface/ICONS/INV_Enchant_Disenchant:30:30:-15:0|tDeMorph Me", 0, 2)
         player:GossipMenuAddItem(0, "|TInterface/ICONS/Ability_Spy:30:30:-15:0|tClose Menue", 0, 3)
     end
@@ -51,7 +50,7 @@ function TimeMorph.OnGossipSelect(event, player, unit, sender, intid, code)
         player:SetScale(Scale)
         player:SetLuaCooldown(TimeMorph.Settings.MorphTime, 3)
         player:RegisterEvent(TimeMorph.CooldownCheck, 1000, player:GetLuaCooldown(3))
-        player:SendBroadcastMessage(string.format("%s You Morph you will DeMorph in %s seconds!", TimeMorphName, player:GetLuaCooldown(3)))
+        player:SendBroadcastMessage(string.format("%s You Morph you will DeMorph in %s seconds!", TimeMorph.Settings.Name, player:GetLuaCooldown(3)))
         player:PlaySoundToPlayer(888)
         player:GossipClearMenu()
         TimeMorph.OnGossipHello(event, player, unit)
@@ -60,7 +59,7 @@ function TimeMorph.OnGossipSelect(event, player, unit, sender, intid, code)
         player:SetScale(1)
         player:SetLuaCooldown(0, 3)
         player:RemoveEvents()
-        player:SendBroadcastMessage(string.format("%s You DeMorph", TimeMorphName))
+        player:SendBroadcastMessage(string.format("%s You DeMorph", TimeMorph.Settings.Name))
         player:GossipClearMenu()
         TimeMorph.OnGossipHello(event, player, unit)
     elseif (intid == 3) then
@@ -74,9 +73,9 @@ function TimeMorph.CooldownCheck(event, delay, repeats, player)
         player:SetScale(1)
         player:PlaySoundToPlayer(1435)
         player:RemoveEvents()
-        player:SendBroadcastMessage(string.format("%s You DeMorph", TimeMorphName))
+        player:SendBroadcastMessage(string.format("%s You DeMorph", TimeMorph.Settings.Name))
     elseif player:GetLuaCooldown(3) <= 10 then
-        player:SendBroadcastMessage(string.format("%s You will DeMorph in %s seconds!", TimeMorphName, player:GetLuaCooldown(3)))
+        player:SendBroadcastMessage(string.format("%s You will DeMorph in %s seconds!", TimeMorph.Settings.Name, player:GetLuaCooldown(3)))
     end
 end
 
