@@ -74,7 +74,7 @@ function RulesSystem.OnLogin(event, player)
 
     if RulesActive then                                                   -- Check Rules Active on Login
         player:AddAura(RulesSystem.Settings.Spell, player)                -- AddAura frozen to Player
-        player:PlaySoundToPlayer(1509)
+        player:PlayDirectSound(1509, player)
         player:SendBroadcastMessage(string.format("%s Welcome %s please read the rules and accept it, use #rules to watch the rules again!", RulesSystem.Settings.Name, PlayerName, RulesCommand))
         player:SetLuaCooldown(RulesSystem.Settings.Cooldown, 2)
         player:RegisterEvent(RulesSystem.CooldownCheck, 1000, player:GetLuaCooldown(2))
@@ -94,7 +94,7 @@ function RulesSystem.OnGossipSelect(event, player, _, sender, intid, code)
         player:RemoveAura(RulesSystem.Settings.Spell)                      -- Remove Aura
         CharDBQuery(string.format("UPDATE character_rules SET active = 0 WHERE guid = (%s)", player:GetGUIDLow()))
         player:SendBroadcastMessage(string.format("%s Thank you %s that they have read the rules and accepted!", RulesSystem.Settings.Name, PlayerName))
-        player:PlaySoundToPlayer(888)
+        player:PlayDirectSound(888, player)
         player:GossipComplete()                                            -- Close the Gossip
     end
 end
@@ -108,7 +108,7 @@ function RulesSystem.CooldownCheck(event, delay, repeats, player)
         player:GossipSendMenu(0x7FFFFFFF, player, 100)
     else
         RulesSystem.OnGossipHello(event, player)
-        player:PlaySoundToPlayer(1150)
+        player:PlayDirectSound(1150, player)
         player:RemoveEvents()
     end
 end
