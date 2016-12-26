@@ -5,12 +5,15 @@
 PremiumSystem = {}
 PremiumSystem.__index = PremiumSystem
 
--- DPremium System Settings
+-- Premium System Settings
 PremiumSystem.Settings = {
-    Version = "1.1",
+    Version = "1.2",
     SystemName = "|CFFE55BB0[Premium System]|r",
     ItemEntry = 60000,
     ItemEnable = false,
+    CoinsCount = 1,
+    ActiveKillCoins = false,
+    ActiveLoginAnnounce = false,
 };
 
 setmetatable(PremiumSystem, {

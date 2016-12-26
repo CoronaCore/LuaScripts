@@ -46,7 +46,7 @@ function PremiumSystem.OnCodeGossipSelect(event, player, _, sender, intid, code)
             AuthDBQuery(string.format("UPDATE account_premium SET end = CURRENT_TIMESTAMP + interval ('%s') day, rank = ('%s'), active = 1 WHERE id = ('%s')", PremiumCodeCheck:GetString(3), PremiumCodeCheck:GetString(4), PlayerAccount))
             player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Your code %s is right!|r", PremiumSystem.Settings.SystemName, PremiumCode))
         else
-            player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Yout code %s is worng or Code already used!|r", PremiumSystem.Settings.SystemName, PremiumCode))
+            player:SendBroadcastMessage(string.format("%s|CFFFE8A0E Your code %s is worng or Code already used!|r", PremiumSystem.Settings.SystemName, PremiumCode))
         end
     end
 end
