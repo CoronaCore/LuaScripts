@@ -10,7 +10,7 @@ TimeMorph.Settings = {
     Name = "|CFF1CB619[Morph System]|r",
     NpcActive = false,
     NpcEntry = 60000,
-    ItemActive = true,
+    ItemActive = false,
     ItemEntry = 70000,
     MorphTime = 25,
 };
@@ -43,7 +43,6 @@ function TimeMorph.OnGossipHello(event, player, unit)
 end
 
 function TimeMorph.OnGossipSelect(event, player, unit, sender, intid, code)
-
     if (intid == 1) then
         local Icon, Name, DisplayID, Scale = table.unpack(TimeMorph.Displays[sender])
         player:SetDisplayId(DisplayID)
@@ -51,7 +50,7 @@ function TimeMorph.OnGossipSelect(event, player, unit, sender, intid, code)
         player:SetLuaCooldown(TimeMorph.Settings.MorphTime, 3)
         player:RegisterEvent(TimeMorph.CooldownCheck, 1000, player:GetLuaCooldown(3))
         player:SendBroadcastMessage(string.format("%s You Morph you will DeMorph in %s seconds!", TimeMorph.Settings.Name, player:GetLuaCooldown(3)))
-        player:PlaySoundToPlayer(888)
+        player:PlayDirectSound(888, player)
         player:GossipClearMenu()
         TimeMorph.OnGossipHello(event, player, unit)
     elseif (intid == 2) then
@@ -71,7 +70,7 @@ function TimeMorph.CooldownCheck(event, delay, repeats, player)
     if player:GetLuaCooldown(3) == 0 then
         player:DeMorph()
         player:SetScale(1)
-        player:PlaySoundToPlayer(1435)
+        player:PlayDirectSound(1435, player)
         player:RemoveEvents()
         player:SendBroadcastMessage(string.format("%s You DeMorph", TimeMorph.Settings.Name))
     elseif player:GetLuaCooldown(3) <= 10 then
