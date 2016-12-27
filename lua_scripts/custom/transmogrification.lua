@@ -92,7 +92,7 @@ local ITEM_SUBCLASS_WEAPON_CROSSBOW     = 18
 local ITEM_SUBCLASS_WEAPON_FISHING_POLE = 20
 
 local EXPANSION_WOTLK = 2
-local EXPANSION_TBC = 2
+local EXPANSION_TBC = 1
 local PLAYER_VISIBLE_ITEM_1_ENTRYID
 local ITEM_SLOT_MULTIPLIER
 if GetCoreExpansion() < EXPANSION_TBC then
@@ -163,7 +163,7 @@ local dataMap = {}
 
 local function GetSlotName(slot, locale)
     if not SlotNames[slot] then return end
-    return SlotNames[slot][locale and locale+1 or 1]
+    return locale and SlotNames[slot][locale+1] or SlotNames[slot][1]
 end
 
 local function GetFakePrice(item)
